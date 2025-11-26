@@ -1,6 +1,6 @@
 # Grafana Git Sync Demo Repository
 
-Demonstration of Grafana's Git Sync feature with three practical scenarios.
+Demonstration of Grafana's Git Sync feature with four practical scenarios.
 
 > ⚠️ **Note**: Git Sync is experimental. Not recommended for production.
 
@@ -23,6 +23,12 @@ Two instances demonstrating dashboard promotion workflow.
 Multiple instances syncing from the same shared directory.
 
 [→ Scenario 3 Guide](scenario-3-multi-region/README.md)
+
+### Scenario 4: Master-Replica with Load Balancer
+
+High availability setup with master-replica instances and easy failover.
+
+[→ Scenario 4 Guide](scenario-4-master-replica/README.md)
 
 ## Prerequisites
 
