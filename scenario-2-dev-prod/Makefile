@@ -37,7 +37,10 @@ start: ## Start all services (dev + prod)
 
 setup-git-sync: ## Configure Git Sync repositories for dev and prod
 	@echo "Configuring Git Sync..."
-	@./setup-git-sync.sh
+	@../scripts/setup-git-sync.sh scenario-2-dev-prod dev repository-dev.yaml prod repository-prod.yaml
+	@echo ""
+	@echo "Dev:  http://localhost:3000 - syncing from scenario-2-dev-prod/dev"
+	@echo "Prod: http://localhost:3001 - syncing from scenario-2-dev-prod/prod"
 
 stop: ## Stop all services
 	docker-compose --env-file ../.env down

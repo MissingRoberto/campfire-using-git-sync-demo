@@ -30,7 +30,9 @@ start: ## Start all services
 
 setup-git-sync: ## Configure Git Sync repository (optional)
 	@echo "Configuring Git Sync..."
-	@./setup-git-sync.sh
+	@../scripts/setup-git-sync.sh scenario-1-default default repository.yaml
+	@echo ""
+	@echo "Grafana: http://localhost:3000 - syncing from scenario-1-default/grafana"
 
 stop: ## Stop all services
 	docker-compose --env-file ../.env down
