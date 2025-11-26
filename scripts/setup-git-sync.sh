@@ -25,6 +25,11 @@ if [ -z "$GITHUB_PAT" ] || [ -z "$GITHUB_REPO" ] || [ -z "$GITHUB_BRANCH" ]; the
     exit 1
 fi
 
+# Export variables for envsubst
+export GITHUB_PAT
+export GITHUB_REPO
+export GITHUB_BRANCH
+
 echo "Setting up Git Sync for $SCENARIO_DIR..."
 
 # Wait for Grafana instances to be ready
@@ -72,8 +77,16 @@ while [ $# -gt 0 ]; do
     # Switch to context
     grafanactl --config=grafanactl.yaml config use-context $CONTEXT
 
-    # Apply repository configuration with environment variable substitution
-    envsubst < $REPO_FILE | grafanactl --config=grafanactl.yaml resources apply -f -
+    # Create temporary directory with proper file naming
+    TEMP_DIR=$(mktemp -d)
+    REPO_NAME=$(basename $REPO_FILE .yaml)
+    envsubst < $REPO_FILE > $TEMP_DIR/${REPO_NAME}.yaml
+
+    # Push repository configuration
+    grafanactl --config=grafanactl.yaml resources push --path $TEMP_DIR
+
+    # Clean up
+    rm -rf $TEMP_DIR
 
     shift 2
 done

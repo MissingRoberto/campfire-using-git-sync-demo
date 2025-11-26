@@ -6,7 +6,7 @@ spec:
   title: Git Sync US Region
   type: github
   github:
-    url: https://github.com/${GITHUB_REPO}
+    url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
     path: scenario-3-multi-region/shared
     generateDashboardPreviews: true

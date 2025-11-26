@@ -5,12 +5,10 @@ contexts:
       user: admin
       password: admin
       org-id: 1
-
   prod:
     grafana:
       server: http://localhost:3001
       user: admin
       password: admin
       org-id: 1
-
-current-context: dev
+current-context: prod

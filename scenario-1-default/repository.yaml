@@ -6,7 +6,7 @@ spec:
   title: Git Sync Default
   type: github
   github:
-    url: https://github.com/${GITHUB_REPO}
+    url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
     path: scenario-1-default/grafana
     generateDashboardPreviews: true

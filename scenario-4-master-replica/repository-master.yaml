@@ -6,7 +6,7 @@ spec:
   title: Git Sync Master
   type: github
   github:
-    url: https://github.com/${GITHUB_REPO}
+    url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
     path: scenario-4-master-replica/shared
     generateDashboardPreviews: true

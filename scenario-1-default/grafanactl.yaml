@@ -5,5 +5,4 @@ contexts:
       user: admin
       password: admin
       org-id: 1
-
 current-context: default
