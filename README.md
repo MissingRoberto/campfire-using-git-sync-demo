@@ -149,22 +149,20 @@ brew install grafanactl  # macOS
 cd scenario-2-dev-prod
 
 # List available contexts
-grafanactl --config=. config get-contexts
+grafanactl --config=grafanactl.yaml config get-contexts
 
 # Switch context (scenario 2, 3, 4 only)
-grafanactl --config=. config use-context prod
+grafanactl --config=grafanactl.yaml config use-context prod
 
 # List dashboards
-grafanactl --config=. get dashboards
+grafanactl --config=grafanactl.yaml get dashboards
 
 # Get specific dashboard
-grafanactl --config=. get dashboard <uid>
+grafanactl --config=grafanactl.yaml get dashboard <uid>
 
 # Push dashboard to Grafana
-grafanactl --config=. push dashboard <file.json>
+grafanactl --config=grafanactl.yaml push dashboard <file.json>
 ```
-
-**Note**: Using `--config=.` tells grafanactl to look for the configuration file in the current directory.
 
 ### Context Names by Scenario
 
