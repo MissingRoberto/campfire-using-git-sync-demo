@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # Development Environment
+  ngrok-dev:
+    image: ngrok/ngrok:latest
+    command: http --url=${NGROK_SUBDOMAIN_DEV} grafana-dev:3000
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  grafana-dev:
+    image: grafana/grafana:main
+    container_name: grafana-dev
+    environment:
+      - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
+      - GF_RENDERING_SERVER_URL=http://renderer-dev:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana-dev:3000/
+      - GF_SERVER_ROOT_URL=https://${NGROK_SUBDOMAIN_DEV}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD:-admin}
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER:-admin}
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana-dev-data:/var/lib/grafana
+      - ./dev/grafana:/var/lib/grafana/dashboards/git-sync:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - renderer-dev
+      - ngrok-dev
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  renderer-dev:
+    image: grafana/grafana-image-renderer:latest
+    container_name: grafana-renderer-dev
+    ports:
+      - "8081:8081"
+    environment:
+      - ENABLE_METRICS=true
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  # Production Environment
+  ngrok-prod:
+    image: ngrok/ngrok:latest
+    command: http --url=${NGROK_SUBDOMAIN_PROD} grafana-prod:3000
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  grafana-prod:
+    image: grafana/grafana:main
+    container_name: grafana-prod
+    environment:
+      - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
+      - GF_RENDERING_SERVER_URL=http://renderer-prod:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana-prod:3000/
+      - GF_SERVER_ROOT_URL=https://${NGROK_SUBDOMAIN_PROD}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD:-admin}
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER:-admin}
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana-prod-data:/var/lib/grafana
+      - ./prod/grafana:/var/lib/grafana/dashboards/git-sync:ro
+    ports:
+      - "3001:3000"
+    depends_on:
+      - renderer-prod
+      - ngrok-prod
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  renderer-prod:
+    image: grafana/grafana-image-renderer:latest
+    container_name: grafana-renderer-prod
+    ports:
+      - "8082:8081"
+    environment:
+      - ENABLE_METRICS=true
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+volumes:
+  grafana-dev-data:
+  grafana-prod-data:
+
+networks:
+  grafana-net:
+    driver: bridge
