@@ -117,6 +117,12 @@ ngrok-url:
 	@echo "Fetching ngrok public URL..."
 	@curl -s http://localhost:4040/api/tunnels | grep -o '"public_url":"[^"]*"' | grep -o 'https://[^"]*' || echo "Ngrok not running or URL not available"
 
-clean:
+clean: ## Stop and remove all containers, volumes, and networks
+	@echo "Cleaning up Git Sync repositories..."
+	@grafanactl --config=grafanactl.yaml config use-context us 2>/dev/null || true
+	@grafanactl --config=grafanactl.yaml resources delete repositories --force 2>/dev/null || echo "No US repositories to clean or Grafana not running"
+	@grafanactl --config=grafanactl.yaml config use-context eu 2>/dev/null || true
+	@grafanactl --config=grafanactl.yaml resources delete repositories --force 2>/dev/null || echo "No EU repositories to clean or Grafana not running"
+	@echo "Stopping and removing containers..."
 	docker-compose --env-file ../.env down -v
-	@echo "All containers and volumes removed"
+	@echo "All resources cleaned up"

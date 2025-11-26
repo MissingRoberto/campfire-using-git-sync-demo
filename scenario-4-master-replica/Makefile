@@ -162,7 +162,13 @@ failover-to-replica:
 	@sleep 2
 	@make ngrok-url
 
-clean:
+clean: ## Stop and remove all containers, volumes, and networks
+	@echo "Cleaning up Git Sync repositories..."
+	@grafanactl --config=grafanactl.yaml config use-context master 2>/dev/null || true
+	@grafanactl --config=grafanactl.yaml resources delete repositories --force 2>/dev/null || echo "No master repositories to clean or Grafana not running"
+	@grafanactl --config=grafanactl.yaml config use-context replica 2>/dev/null || true
+	@grafanactl --config=grafanactl.yaml resources delete repositories --force 2>/dev/null || echo "No replica repositories to clean or Grafana not running"
+	@echo "Stopping and removing containers..."
 	docker-compose --env-file ../.env down -v
 	rm -f docker-compose.yml.bak
-	@echo "All containers and volumes removed"
+	@echo "All resources cleaned up"

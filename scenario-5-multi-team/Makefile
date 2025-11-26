@@ -86,6 +86,9 @@ health: ## Check health of services
 	@docker-compose --env-file ../.env logs ngrok 2>/dev/null | grep -q "started tunnel" && echo "  ✓ Active" || echo "  ✗ Not active"
 
 clean: ## Stop and remove all containers, volumes, and networks
+	@echo "Cleaning up Git Sync repositories..."
+	@grafanactl --config=grafanactl.yaml resources delete repositories --force 2>/dev/null || echo "No repositories to clean or Grafana not running"
+	@echo "Stopping and removing containers..."
 	docker-compose --env-file ../.env down -v
 	@echo "All resources cleaned up"
 
