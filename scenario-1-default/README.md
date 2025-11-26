@@ -14,6 +14,7 @@ Single Grafana instance with Git Sync and 22 demo dashboards.
 ### 1. Configure Environment
 
 ```bash
+# From repository root
 cp .env.example .env
 # Edit .env with your ngrok token
 ```

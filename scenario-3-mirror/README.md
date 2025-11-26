@@ -14,6 +14,7 @@ Two Grafana instances syncing from the same Git directory for disaster recovery 
 ### 1. Configure Environment
 
 ```bash
+# From repository root
 cp .env.example .env
 # Edit with your ngrok token
 ```

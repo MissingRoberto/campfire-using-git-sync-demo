@@ -76,12 +76,12 @@ Two instances for disaster recovery and high availability.
 ### Setup
 
 ```bash
-# Choose a scenario
-cd scenario-1-default
-
-# Configure environment
+# Configure environment (one time, at repository root)
 cp .env.example .env
 # Edit .env with your ngrok token
+
+# Choose a scenario
+cd scenario-1-default
 
 # Start services
 docker-compose up -d

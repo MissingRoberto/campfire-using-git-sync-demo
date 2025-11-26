@@ -16,6 +16,7 @@ Demonstrate promoting a dashboard from development to production using Git Sync.
 ### 1. Configure Environment
 
 ```bash
+# From repository root
 cp .env.example .env
 # Edit with your ngrok token
 ```

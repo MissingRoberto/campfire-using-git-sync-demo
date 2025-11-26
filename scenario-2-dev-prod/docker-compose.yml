@@ -1,3 +1,6 @@
+env_file:
+  - ../.env
+
 services:
   # Ngrok - single tunnel (free tier limitation)
   # Points to prod for Git Sync webhook support

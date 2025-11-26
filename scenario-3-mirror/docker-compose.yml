@@ -1,3 +1,6 @@
+env_file:
+  - ../.env
+
 services:
   # Ngrok - single tunnel (free tier limitation)
   # Points to primary by default, change to grafana-mirror:3001 for mirror

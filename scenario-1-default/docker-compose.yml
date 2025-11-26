@@ -1,3 +1,6 @@
+env_file:
+  - ../.env
+
 services:
   ngrok:
     image: ngrok/ngrok:latest
