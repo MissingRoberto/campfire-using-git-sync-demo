@@ -79,6 +79,47 @@ Login: `admin` / `admin`
 
 See [main README](../README.md#quick-start) for full Git Sync setup instructions.
 
+## Configuration Flexibility
+
+This scenario shows dev and prod using the same repository with different paths, but you can configure them to use:
+
+- **Different Repositories**: Separate repos for dev and prod environments
+  ```yaml
+  # Dev
+  github:
+    url: https://github.com/company/dashboards-dev
+
+  # Prod
+  github:
+    url: https://github.com/company/dashboards-prod
+  ```
+
+- **Different Branches**: Different branches in the same repository
+  ```yaml
+  # Dev
+  github:
+    url: https://github.com/company/dashboards
+    branch: develop
+
+  # Prod
+  github:
+    url: https://github.com/company/dashboards
+    branch: main
+  ```
+
+- **Different Paths**: Different paths in the same repository (as shown in this scenario)
+  ```yaml
+  # Dev
+  github:
+    path: scenario-2-dev-prod/dev
+
+  # Prod
+  github:
+    path: scenario-2-dev-prod/prod
+  ```
+
+- **Any Combination**: Mix and match based on your workflow needs
+
 ## Promotion Workflow
 
 ### 1. Edit in Dev

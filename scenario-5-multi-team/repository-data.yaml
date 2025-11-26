@@ -1,0 +1,22 @@
+apiVersion: provisioning.grafana.app/v0alpha1
+kind: Repository
+metadata:
+  name: git-sync-data
+spec:
+  title: Git Sync Data Team
+  type: github
+  github:
+    url: ${GITHUB_REPO}
+    branch: ${GITHUB_BRANCH}
+    path: scenario-5-multi-team/team-data/grafana
+    generateDashboardPreviews: true
+  sync:
+    enabled: true
+    intervalSeconds: 60
+    target: folder
+  workflows:
+    - write
+    - branch
+secure:
+  token:
+    create: ${GITHUB_PAT}

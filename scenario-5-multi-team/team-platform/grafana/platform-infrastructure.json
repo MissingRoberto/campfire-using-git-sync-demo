@@ -1,0 +1,30 @@
+{
+  "dashboard": {
+    "title": "Platform Infrastructure",
+    "uid": "platform-infra",
+    "tags": ["platform", "infrastructure"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "type": "text",
+        "title": "Platform Team Dashboard",
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 24,
+          "h": 3
+        },
+        "options": {
+          "content": "# Platform Infrastructure Monitoring\n\nThis dashboard is managed by the Platform Team.\n\nMonitoring: Kubernetes clusters, CI/CD pipelines, and infrastructure health.",
+          "mode": "markdown"
+        }
+      }
+    ]
+  },
+  "folderTitle": "Platform Team",
+  "overwrite": true
+}

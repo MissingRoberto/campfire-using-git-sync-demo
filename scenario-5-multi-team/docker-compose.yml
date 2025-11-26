@@ -1,0 +1,50 @@
+services:
+  ngrok:
+    image: ngrok/ngrok:latest
+    command: http --url=${NGROK_SUBDOMAIN} grafana:3000
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:main
+    pull_policy: always
+    container_name: grafana-multi-team
+    environment:
+      - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
+      - GF_RENDERING_SERVER_URL=http://renderer:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana:3000/
+      - GF_SERVER_ROOT_URL=${NGROK_SUBDOMAIN}
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - renderer
+      - ngrok
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    container_name: grafana-renderer
+    ports:
+      - "8081:8081"
+    environment:
+      - ENABLE_METRICS=true
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+volumes:
+  grafana-data:
+
+networks:
+  grafana-net:
+    driver: bridge
