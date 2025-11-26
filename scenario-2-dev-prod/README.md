@@ -5,7 +5,7 @@ Separate development and production Grafana instances with independent Git Sync 
 ## Overview
 
 - Two instances: Dev and Prod
-- Separate ngrok tunnels
+- Single ngrok tunnel (free tier limitation)
 - Independent Git paths
 - Promote changes from dev to prod
 
@@ -15,33 +15,29 @@ Separate development and production Grafana instances with independent Git Sync 
 
 ```bash
 cp .env.example .env
-# Edit with both ngrok tokens/subdomains
+# Edit with your ngrok token
 ```
 
-**Note**: Free ngrok allows 1 tunnel. Options:
-- Paid ngrok (multiple tunnels)
-- Two ngrok accounts
-- Run dev and prod separately
+**Note**: Free ngrok allows only 1 tunnel. Both instances run, but ngrok exposes only one (dev by default).
 
 ### 2. Start Services
 
 ```bash
-# Both instances (requires paid ngrok)
 docker-compose up -d
-
-# Dev only
-docker-compose up -d grafana-dev renderer-dev ngrok-dev
-
-# Prod only
-docker-compose up -d grafana-prod renderer-prod ngrok-prod
 ```
 
 ### 3. Access Instances
 
-**Dev**: http://localhost:3000 or ngrok-dev URL
-**Prod**: http://localhost:3001 or ngrok-prod URL
+**Dev**: http://localhost:3000 or ngrok URL
+**Prod**: http://localhost:3001 (local only)
 
 Login: `admin` / `admin`
+
+### 4. Get Ngrok URL
+
+```bash
+docker-compose logs ngrok | grep "started tunnel"
+```
 
 ## Configure Git Sync
 
@@ -64,7 +60,7 @@ Login: `admin` / `admin`
 
 ### 1. Develop in Dev
 
-1. Make changes in Dev Grafana
+1. Make changes in Dev Grafana (port 3000)
 2. Save and create PR
 3. Review and merge
 
@@ -76,7 +72,7 @@ Login: `admin` / `admin`
 
 ### 3. Promote to Prod
 
-**Option A: Copy Files**
+**Copy dashboards:**
 ```bash
 cp scenario-2-dev-prod/dev/monitoring/dashboard.json \
    scenario-2-dev-prod/prod/monitoring/dashboard.json
@@ -85,19 +81,21 @@ git commit -m "Promote dashboard to prod"
 git push
 ```
 
-**Option B: Git Merge**
-```bash
-# If using separate branches
-git checkout main
-git merge dev
-git push
-```
-
 ### 4. Verify in Prod
 
-1. Check dashboard appears in Prod
+1. Check dashboard appears in Prod (port 3001)
 2. Test functionality
-3. Monitor for issues
+
+## Switching Ngrok Tunnel
+
+To expose prod instead of dev, edit docker-compose.yml:
+
+```yaml
+ngrok:
+  command: http grafana-prod:3000  # Change from grafana-dev:3000
+```
+
+Then restart: `docker-compose restart ngrok`
 
 ## Common Commands
 
@@ -111,19 +109,13 @@ docker-compose logs -f grafana-prod
 
 # Stop
 docker-compose down
-
-# Clean slate
-docker-compose down -v
 ```
 
 ## Troubleshooting
 
-### Only One Ngrok Tunnel Works
+### Ngrok Only Exposes One Instance
 
-Free tier limits to 1 tunnel. Solutions:
-1. Paid ngrok plan
-2. Two ngrok accounts
-3. Run dev/prod separately
+This is expected with free tier. Access the other instance via localhost:3001.
 
 ### Dashboards Out of Sync
 

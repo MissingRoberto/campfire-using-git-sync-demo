@@ -1,14 +1,16 @@
 services:
-  # Primary Instance
-  ngrok-primary:
+  # Ngrok - single tunnel (free tier limitation)
+  # Points to primary by default, change to grafana-mirror:3001 for mirror
+  ngrok:
     image: ngrok/ngrok:latest
-    command: http --url=${NGROK_SUBDOMAIN_PRIMARY} grafana-primary:3000
+    command: http grafana-primary:3000
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
     networks:
       - grafana-net
     restart: unless-stopped
 
+  # Primary Instance
   grafana-primary:
     image: grafana/grafana:main
     container_name: grafana-primary
@@ -16,7 +18,6 @@ services:
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
       - GF_RENDERING_SERVER_URL=http://renderer-primary:8081/render
       - GF_RENDERING_CALLBACK_URL=http://grafana-primary:3000/
-      - GF_SERVER_ROOT_URL=https://${NGROK_SUBDOMAIN_PRIMARY}
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SECURITY_ADMIN_USER=admin
       - GF_AUTH_ANONYMOUS_ENABLED=false
@@ -26,7 +27,6 @@ services:
       - "3000:3000"
     depends_on:
       - renderer-primary
-      - ngrok-primary
     networks:
       - grafana-net
     restart: unless-stopped
@@ -43,15 +43,6 @@ services:
     restart: unless-stopped
 
   # Mirror Instance
-  ngrok-mirror:
-    image: ngrok/ngrok:latest
-    command: http --url=${NGROK_SUBDOMAIN_MIRROR} grafana-mirror:3000
-    environment:
-      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
-    networks:
-      - grafana-net
-    restart: unless-stopped
-
   grafana-mirror:
     image: grafana/grafana:main
     container_name: grafana-mirror
@@ -59,7 +50,6 @@ services:
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
       - GF_RENDERING_SERVER_URL=http://renderer-mirror:8081/render
       - GF_RENDERING_CALLBACK_URL=http://grafana-mirror:3000/
-      - GF_SERVER_ROOT_URL=https://${NGROK_SUBDOMAIN_MIRROR}
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SECURITY_ADMIN_USER=admin
       - GF_AUTH_ANONYMOUS_ENABLED=false
@@ -69,7 +59,6 @@ services:
       - "3001:3000"
     depends_on:
       - renderer-mirror
-      - ngrok-mirror
     networks:
       - grafana-net
     restart: unless-stopped

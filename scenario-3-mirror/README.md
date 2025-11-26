@@ -6,9 +6,8 @@ Two Grafana instances syncing from the same Git directory for disaster recovery 
 
 - Two instances: Primary and Mirror
 - Both sync from same Git directory
-- Separate ngrok tunnels
+- Single ngrok tunnel (free tier limitation)
 - Disaster recovery and failover
-- Geo-distribution
 
 ## Quick Start
 
@@ -16,33 +15,29 @@ Two Grafana instances syncing from the same Git directory for disaster recovery 
 
 ```bash
 cp .env.example .env
-# Edit with both ngrok tokens/subdomains
+# Edit with your ngrok token
 ```
 
-**Note**: Free ngrok allows 1 tunnel. Options:
-- Paid ngrok (multiple tunnels)
-- Two ngrok accounts
-- Run primary and mirror separately
+**Note**: Free ngrok allows only 1 tunnel. Both instances run, but ngrok exposes only one (primary by default).
 
 ### 2. Start Services
 
 ```bash
-# Both instances (requires paid ngrok)
 docker-compose up -d
-
-# Primary only
-docker-compose up -d grafana-primary renderer-primary ngrok-primary
-
-# Mirror only
-docker-compose up -d grafana-mirror renderer-mirror ngrok-mirror
 ```
 
 ### 3. Access Instances
 
-**Primary**: http://localhost:3000 or ngrok-primary URL
-**Mirror**: http://localhost:3001 or ngrok-mirror URL
+**Primary**: http://localhost:3000 or ngrok URL
+**Mirror**: http://localhost:3001 (local only)
 
 Login: `admin` / `admin`
+
+### 4. Get Ngrok URL
+
+```bash
+docker-compose logs ngrok | grep "started tunnel"
+```
 
 ## Configure Git Sync
 
@@ -65,27 +60,6 @@ Both instances sync from the same repository path to stay identical.
 2. Use same **Path**: `scenario-3-mirror/grafana/`
 3. **Sync Mode**: Read-Only (recommended to avoid conflicts)
 
-## Use Cases
-
-### Disaster Recovery
-
-Primary fails → Switch to mirror
-
-```bash
-# Update DNS/load balancer to mirror URL
-# Mirror continues serving from last sync
-```
-
-### High Availability
-
-Both instances serve traffic via load balancer.
-
-### Geo-Distribution
-
-- Primary in one region
-- Mirror in another region
-- Route users to nearest instance
-
 ## Synchronization
 
 Both instances sync from the same Git directory:
@@ -94,12 +68,23 @@ Both instances sync from the same Git directory:
 - Automatic synchronization every 60s
 - Both instances stay identical
 
-### Failover Process
+## Failover Process
 
 1. Primary goes down
-2. Switch traffic to mirror
+2. Switch ngrok tunnel to mirror
 3. Mirror serves all requests
 4. When primary recovered, it syncs from Git automatically
+
+## Switching Ngrok Tunnel
+
+To expose mirror instead of primary, edit docker-compose.yml:
+
+```yaml
+ngrok:
+  command: http grafana-mirror:3000  # Change from grafana-primary:3000
+```
+
+Then restart: `docker-compose restart ngrok`
 
 ## Common Commands
 
@@ -117,30 +102,22 @@ curl http://localhost:3001/api/health  # Mirror
 
 # Stop
 docker-compose down
-
-# Clean slate
-docker-compose down -v
 ```
 
 ## Troubleshooting
 
-### Only One Ngrok Tunnel Works
+### Ngrok Only Exposes One Instance
 
-Free tier limits to 1 tunnel. Solutions:
-1. Paid ngrok plan
-2. Two ngrok accounts
-3. Run primary/mirror separately
+This is expected with free tier. Access the other instance via localhost:3001.
 
 ### Mirror Behind Primary
 
 1. Check Git Sync status
 2. Force sync via UI
-3. Reduce polling interval
-4. Check for Git conflicts
+3. Review sync logs
 
 ### Dashboards Different
 
 1. Verify both use same repository path
 2. Check last sync time
 3. Force sync on mirror
-4. Review sync logs
