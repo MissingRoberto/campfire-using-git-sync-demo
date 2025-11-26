@@ -10,6 +10,7 @@ services:
 
   grafana:
     image: grafana/grafana:main
+    pull_policy: always
     container_name: grafana-default
     environment:
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards

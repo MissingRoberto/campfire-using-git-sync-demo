@@ -13,6 +13,7 @@ services:
   # Development Environment
   grafana-dev:
     image: grafana/grafana:main
+    pull_policy: always
     container_name: grafana-dev
     environment:
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
@@ -45,6 +46,7 @@ services:
   # Production Environment
   grafana-prod:
     image: grafana/grafana:main
+    pull_policy: always
     container_name: grafana-prod
     environment:
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
