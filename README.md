@@ -1,37 +1,8 @@
 # Grafana Git Sync Demo Repository
 
-Demonstration of Grafana's Git Sync feature with 22 demo dashboards across three scenarios.
-
-## Overview
-
-This repository shows how to use Grafana's Git Sync feature for version controlling dashboards:
-
-- Version control dashboards with Git
-- Collaborate using Git workflows
-- Bidirectional sync between Grafana and Git
-- PR previews with screenshots
-- Public access via ngrok
+Demonstration of Grafana's Git Sync feature with three practical scenarios.
 
 > ⚠️ **Note**: Git Sync is experimental. Not recommended for production.
-
-## Repository Structure
-
-```
-campfire-using-git-sync-demo/
-├── scenario-1-default/           # Single instance setup
-│   ├── grafana/                  # 22 demo dashboards
-│   ├── docker-compose.yml
-│   └── .env.example
-├── scenario-2-dev-prod/          # Dev/Prod environments
-│   ├── dev/                      # 22 dev dashboards
-│   ├── prod/                     # 22 prod dashboards
-│   ├── docker-compose.yml
-│   └── .env.example
-└── scenario-3-mirror/            # Primary/Mirror setup
-    ├── grafana/                  # 22 dashboards (shared by both)
-    ├── docker-compose.yml
-    └── .env.example
-```
 
 ## Scenarios
 
@@ -39,75 +10,78 @@ campfire-using-git-sync-demo/
 
 Single Grafana instance with Git Sync.
 
-- Single instance with ngrok
-- 22 demo dashboards
-- Image rendering for PR previews
-
 [→ Scenario 1 Guide](scenario-1-default/README.md)
 
 ### Scenario 2: Dev/Prod Environments
 
-Separate development and production instances.
-
-- Dev and Prod instances
-- Independent ngrok tunnels
-- Promote changes from dev to prod
+Two instances demonstrating dashboard promotion workflow.
 
 [→ Scenario 2 Guide](scenario-2-dev-prod/README.md)
 
 ### Scenario 3: Primary/Mirror Setup
 
-Two instances for disaster recovery and high availability.
-
-- Primary and Mirror instances
-- Failover capability
-- Geo-distribution
+Two instances syncing from same directory for high availability.
 
 [→ Scenario 3 Guide](scenario-3-mirror/README.md)
 
-## Quick Start
-
-### Prerequisites
+## Prerequisites
 
 - Docker & Docker Compose
 - Ngrok account ([ngrok.com](https://ngrok.com))
 - GitHub account with Personal Access Token
 
-### Setup
+## Quick Start
+
+### 1. Configure Environment
 
 ```bash
-# Configure environment (one time, at repository root)
+# At repository root
 cp .env.example .env
 # Edit .env with your ngrok token
-
-# Choose a scenario
-cd scenario-1-default
-
-# Start services
-docker-compose up -d
-
-# Get your public URL
-docker-compose logs ngrok | grep "started tunnel"
 ```
 
-### Access Grafana
+### 2. Choose and Start a Scenario
 
-Open your ngrok URL and login:
-- Username: `admin`
-- Password: `admin`
+```bash
+cd scenario-1-default
+make start
+```
 
-### Configure Git Sync
+### 3. Get Ngrok URL
+
+```bash
+make ngrok-url
+```
+
+### 4. Access Grafana
+
+Open the ngrok URL and login with `admin` / `admin`
+
+### 5. Configure Git Sync
 
 1. Go to **Administration** → **Provisioning**
 2. Click **"Configure Git Sync"**
-3. Enter details:
+3. Enter:
    - **Repository**: `https://github.com/MissingRoberto/campfire-using-git-sync-demo`
    - **Branch**: `main`
-   - **Path**: Your scenario path (e.g., `scenario-1-default/grafana/`)
+   - **Path**: Scenario-specific path (see scenario README)
    - **Personal Access Token**: Your GitHub PAT
 4. Click **"Finish"**
 
-📖 **Detailed Guide**: [GIT-SYNC-UI-GUIDE.md](GIT-SYNC-UI-GUIDE.md)
+## Makefile Commands
+
+All scenarios include a Makefile with helpful commands:
+
+```bash
+make help          # Show all available commands
+make start         # Start services
+make open          # Open Grafana in browser
+make ngrok-url     # Get public URL
+make logs          # View logs
+make health        # Check service health
+make stop          # Stop services
+make clean         # Remove all containers and volumes
+```
 
 ## Git Sync Workflow
 
@@ -115,14 +89,14 @@ Open your ngrok URL and login:
 
 **In Grafana**:
 1. Create dashboard
-2. Save and choose workflow: "Push to main" or "Create new branch"
+2. Save and choose: "Push to main" or "Create new branch"
 3. Enter commit message
 4. Click "Open Pull Request" if using branch workflow
 
 **In Git**:
 1. Create dashboard JSON in CRD format
 2. Commit and push
-3. Grafana syncs automatically
+3. Grafana syncs automatically (60s interval)
 
 ### Dashboard Format
 
@@ -139,20 +113,35 @@ Open your ngrok URL and login:
 }
 ```
 
-## Common Commands
+## Troubleshooting
+
+### Ngrok Issues
 
 ```bash
-# Start
-docker-compose up -d
+make ngrok-url          # Get current URL
+docker-compose logs ngrok
+docker-compose restart ngrok
+```
 
-# View logs
-docker-compose logs -f grafana
+### Git Sync Not Working
 
-# Stop
-docker-compose down
+1. Verify GitHub PAT has correct permissions (repo, pull requests, webhooks)
+2. Check repository path matches directory structure
+3. Review Grafana logs: `make logs`
+4. Ensure ngrok URL is accessible
 
-# Clean slate
-docker-compose down -v
+### Dashboards Not Appearing
+
+1. Check Git Sync status: Administration → Provisioning
+2. Wait 60s for sync interval
+3. Force sync via UI: Pull button
+4. Verify dashboard CRD format is correct
+
+### Service Health
+
+```bash
+make health     # Check all services
+make status     # Show container status
 ```
 
 ## Resources
