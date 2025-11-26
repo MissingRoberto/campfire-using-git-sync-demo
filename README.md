@@ -1,6 +1,6 @@
 # Grafana Git Sync Demo Repository
 
-Demonstration of Grafana's Git Sync feature with two practical scenarios.
+Demonstration of Grafana's Git Sync feature with three practical scenarios.
 
 > ⚠️ **Note**: Git Sync is experimental. Not recommended for production.
 
@@ -17,6 +17,12 @@ Single Grafana instance with Git Sync.
 Two instances demonstrating dashboard promotion workflow.
 
 [→ Scenario 2 Guide](scenario-2-dev-prod/README.md)
+
+### Scenario 3: Multi-Region Deployment
+
+Multiple instances syncing from the same shared directory.
+
+[→ Scenario 3 Guide](scenario-3-multi-region/README.md)
 
 ## Prerequisites
 

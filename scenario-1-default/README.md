@@ -6,14 +6,12 @@ Single Grafana instance with Git Sync.
 
 ```mermaid
 graph LR
-    User[User] --> Ngrok[Ngrok Tunnel]
-    Ngrok --> Grafana[Grafana Instance]
+    User[User] --> Grafana[Grafana Instance]
     Grafana <--> |Git Sync| GitHub[GitHub Repository]
     Grafana --> Renderer[Image Renderer]
 
     style Grafana fill:#f96332
     style GitHub fill:#333
-    style Ngrok fill:#1f8fff
 ```
 
 ## What's Included
@@ -47,6 +45,18 @@ Login: `admin` / `admin`
 **Path for this scenario**: `scenario-1-default/grafana/`
 
 See [main README](../README.md#quick-start) for full Git Sync setup instructions.
+
+## Try It Out
+
+Once Git Sync is configured, try these features:
+
+- [ ] **View synced dashboards** - Check that existing dashboards appear in Grafana UI
+- [ ] **Create dashboard in UI** - Create a new dashboard and save directly to `main` branch
+- [ ] **Use branch workflow** - Create a dashboard, choose "Create new branch", and open a pull request
+- [ ] **Edit in Git** - Modify a dashboard JSON file in GitHub and watch it sync to Grafana (60s interval)
+- [ ] **Force manual sync** - Use the Pull button in Administration → Provisioning to sync immediately
+- [ ] **Check sync status** - View Git Sync status and history in Administration → Provisioning
+- [ ] **Test PR previews** - Create a PR with dashboard changes and view rendered preview images
 
 ## Makefile Commands
 

@@ -1,0 +1,61 @@
+env_file:
+  - ../.env
+
+services:
+  grafana-us:
+    image: grafana/grafana:latest
+    container_name: grafana-us
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
+      - GF_LOG_LEVEL=info
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  grafana-eu:
+    image: grafana/grafana:latest
+    container_name: grafana-eu
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_ROOT_URL=${NGROK_SUBDOMAIN}
+      - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
+      - GF_LOG_LEVEL=info
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok-eu
+    command: http --url=${NGROK_SUBDOMAIN} grafana-eu:3000
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    ports:
+      - "4040:4040"
+    restart: unless-stopped
+    depends_on:
+      - grafana-eu
+
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    container_name: renderer-eu
+    ports:
+      - "8081:8081"
+    environment:
+      - ENABLE_METRICS=true
+      - HTTP_PORT=8081
+    restart: unless-stopped

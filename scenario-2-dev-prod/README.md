@@ -6,21 +6,37 @@ Demonstrate promoting a dashboard from development to production using Git Sync.
 
 ```mermaid
 graph TB
-    User[User] --> |localhost:3000| Dev[Dev Grafana]
-    User --> Ngrok[Ngrok Tunnel]
-    Ngrok --> |localhost:3001| Prod[Prod Grafana]
+    User[User] --> Dev[Dev Grafana]
+    User --> Prod[Prod Grafana]
 
-    Dev <--> |Git Sync<br/>dev/| GitHub[GitHub Repository]
-    Prod <--> |Git Sync<br/>prod/| GitHub
+    subgraph GitHub[GitHub Repository]
+        DevFolder[dev/]
+        ProdFolder[prod/]
+    end
 
-    Dev -.-> |Promote| Copy[Copy Dashboard]
-    Copy -.-> |Git Commit| GitHub
+    Dev <--> |Git Sync| DevFolder
+    Prod <--> |Git Sync| ProdFolder
 
     style Dev fill:#ffa500
     style Prod fill:#f96332
     style GitHub fill:#333
-    style Ngrok fill:#1f8fff
-    style Copy fill:#90ee90
+```
+
+## Promotion Workflow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Dev as Dev Grafana
+    participant Git as GitHub Repository
+    participant Prod as Prod Grafana
+
+    User->>Dev: 1. Edit dashboard
+    Dev->>Git: 2. Save to dev/ folder
+    User->>Git: 3. Copy dashboard<br/>dev/ → prod/
+    User->>Git: 4. Commit & Push
+    Git->>Prod: 5. Git Sync (60s)
+    Prod->>User: 6. Dashboard available
 ```
 
 ## What's Included
