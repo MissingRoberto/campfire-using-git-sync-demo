@@ -2,7 +2,7 @@
 
 > **Last Updated:** November 28, 2025
 >
-> **Purpose:** This repository provides practical demonstrations of Grafana's Git Sync feature through four real-world scenarios. It's designed to help DevOps engineers, SREs, and Grafana users learn how to implement bidirectional synchronization between Grafana dashboards and Git repositories.
+> **Purpose:** This repository provides practical demonstrations of Grafana's Git Sync feature through five real-world scenarios. It's designed to help DevOps engineers, SREs, and Grafana users learn how to implement bidirectional synchronization between Grafana dashboards and Git repositories.
 
 ## ⚠️ Important Disclaimers
 
@@ -12,7 +12,7 @@
 
 ## Overview
 
-Demonstration of Grafana's Git Sync feature with four practical scenarios covering common deployment patterns.
+Demonstration of Grafana's Git Sync feature with five practical scenarios covering common deployment patterns.
 
 ## Scenarios
 
@@ -39,6 +39,12 @@ Multiple instances syncing from the same shared directory.
 High availability setup with master-replica instances and easy failover.
 
 [→ Scenario 4 Guide](scenario-4-master-replica/README.md)
+
+### Scenario 5: Multi-Team Setup
+
+Single Grafana instance with multiple Git Sync repositories for different teams.
+
+[→ Scenario 5 Guide](scenario-5-multi-team/README.md)
 
 ## Prerequisites
 
@@ -184,7 +190,8 @@ grafanactl --config=grafanactl.yaml resources get dashboard/<name>
 - **Scenario 1**: `default`
 - **Scenario 2**: `dev`, `prod`
 - **Scenario 3**: `us`, `eu`
-- **Scenario 4**: `master`, `replica`, `load-balancer`
+- **Scenario 4**: `master`, `replica`
+- **Scenario 5**: `default` (single instance with multiple repositories)
 
 ## Troubleshooting
 
