@@ -24,7 +24,20 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source",
+        "tooltip": "",
+        "type": "link",
+        "url": "https://github.com/MissingRoberto/campfire-using-git-sync-demo/blob/test/scenario-1-default/grafana/new-dashboard-2025-11-26-qy2ho.json"
+      }
+    ],
     "panels": [],
     "preload": false,
     "schemaVersion": 42,
