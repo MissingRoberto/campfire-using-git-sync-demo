@@ -2,7 +2,7 @@
   "apiVersion": "dashboard.grafana.app/v1beta1",
   "kind": "Dashboard",
   "metadata": {
-    "name": "memory-metrics"
+    "name": "api-performance"
   },
   "spec": {
     "annotations": {
@@ -26,11 +26,11 @@
             "custom": {
               "axisCenteredZero": false,
               "axisColorMode": "text",
-              "axisLabel": "Memory",
+              "axisLabel": "",
               "axisPlacement": "auto",
               "barAlignment": 0,
               "drawStyle": "line",
-              "fillOpacity": 40,
+              "fillOpacity": 20,
               "gradientMode": "opacity",
               "hideFrom": {
                 "tooltip": false,
@@ -47,169 +47,14 @@
               "spanNulls": false,
               "stacking": {
                 "group": "A",
-                "mode": "normal"
+                "mode": "none"
               },
               "thresholdsStyle": {
                 "mode": "off"
               }
             },
             "mappings": [],
-            "max": 16000000000,
-            "min": 0,
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "bytes"
-          },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "Used"
-              },
-              "properties": [
-                {
-                  "id": "color",
-                  "value": {
-                    "fixedColor": "red",
-                    "mode": "fixed"
-                  }
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "Cached"
-              },
-              "properties": [
-                {
-                  "id": "color",
-                  "value": {
-                    "fixedColor": "yellow",
-                    "mode": "fixed"
-                  }
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "Buffers"
-              },
-              "properties": [
-                {
-                  "id": "color",
-                  "value": {
-                    "fixedColor": "blue",
-                    "mode": "fixed"
-                  }
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "Free"
-              },
-              "properties": [
-                {
-                  "id": "color",
-                  "value": {
-                    "fixedColor": "green",
-                    "mode": "fixed"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        "gridPos": {
-          "h": 9,
-          "w": 14,
-          "x": 0,
-          "y": 0
-        },
-        "id": 1,
-        "options": {
-          "legend": {
-            "calcs": ["mean", "max", "last"],
-            "displayMode": "table",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "targets": [
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 4000000000,
-            "max": 8000000000,
-            "alias": "Used"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 2000000000,
-            "max": 4000000000,
-            "alias": "Cached"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "C",
-            "scenarioId": "random_walk",
-            "min": 500000000,
-            "max": 1500000000,
-            "alias": "Buffers"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "D",
-            "scenarioId": "random_walk",
-            "min": 1000000000,
-            "max": 3000000000,
-            "alias": "Free"
-          }
-        ],
-        "title": "Memory Usage Breakdown",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "testdata",
-          "uid": "-- Grafana --"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "max": 100,
+            "max": 500,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
@@ -220,38 +65,36 @@
                 },
                 {
                   "color": "yellow",
-                  "value": 70
-                },
-                {
-                  "color": "orange",
-                  "value": 85
+                  "value": 200
                 },
                 {
                   "color": "red",
-                  "value": 95
+                  "value": 400
                 }
               ]
             },
-            "unit": "percent"
+            "unit": "ms"
           },
           "overrides": []
         },
         "gridPos": {
-          "h": 9,
-          "w": 5,
-          "x": 14,
+          "h": 8,
+          "w": 12,
+          "x": 0,
           "y": 0
         },
-        "id": 2,
+        "id": 1,
         "options": {
-          "orientation": "auto",
-          "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
+          "legend": {
+            "calcs": ["mean", "max", "min"],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true
           },
-          "showThresholdLabels": false,
-          "showThresholdMarkers": true
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
         },
         "targets": [
           {
@@ -262,164 +105,8 @@
             "refId": "A",
             "scenarioId": "random_walk",
             "min": 50,
-            "max": 95
-          }
-        ],
-        "title": "Memory Usage %",
-        "type": "gauge"
-      },
-      {
-        "datasource": {
-          "type": "testdata",
-          "uid": "-- Grafana --"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 1000000000
-                }
-              ]
-            },
-            "unit": "bytes"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 9,
-          "w": 5,
-          "x": 19,
-          "y": 0
-        },
-        "id": 3,
-        "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
-          },
-          "textMode": "auto"
-        },
-        "targets": [
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 2000000000,
-            "max": 5000000000
-          }
-        ],
-        "title": "Available Memory",
-        "type": "stat"
-      },
-      {
-        "datasource": {
-          "type": "testdata",
-          "uid": "-- Grafana --"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "Swap",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 25,
-              "gradientMode": "opacity",
-              "hideFrom": {
-                "tooltip": false,
-                "viz": false,
-                "legend": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 2,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "line+area"
-              }
-            },
-            "mappings": [],
-            "max": 8000000000,
-            "min": 0,
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 6000000000
-                }
-              ]
-            },
-            "unit": "bytes"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 9
-        },
-        "id": 4,
-        "options": {
-          "legend": {
-            "calcs": ["mean", "max", "last"],
-            "displayMode": "table",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "targets": [
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 0,
-            "max": 4000000000,
-            "alias": "Swap Used"
+            "max": 500,
+            "alias": "P95 Response Time"
           },
           {
             "datasource": {
@@ -428,12 +115,12 @@
             },
             "refId": "B",
             "scenarioId": "random_walk",
-            "min": 4000000000,
-            "max": 8000000000,
-            "alias": "Swap Total"
+            "min": 20,
+            "max": 250,
+            "alias": "P50 Response Time"
           }
         ],
-        "title": "Swap Usage",
+        "title": "API Response Times",
         "type": "timeseries"
       },
       {
@@ -449,12 +136,12 @@
             "custom": {
               "axisCenteredZero": false,
               "axisColorMode": "text",
-              "axisLabel": "Operations/sec",
+              "axisLabel": "",
               "axisPlacement": "auto",
               "barAlignment": 0,
               "drawStyle": "line",
               "fillOpacity": 20,
-              "gradientMode": "none",
+              "gradientMode": "opacity",
               "hideFrom": {
                 "tooltip": false,
                 "viz": false,
@@ -477,6 +164,8 @@
               }
             },
             "mappings": [],
+            "max": 10000,
+            "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -486,7 +175,7 @@
                 }
               ]
             },
-            "unit": "ops"
+            "unit": "reqps"
           },
           "overrides": []
         },
@@ -494,9 +183,9 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 9
+          "y": 0
         },
-        "id": 5,
+        "id": 2,
         "options": {
           "legend": {
             "calcs": ["mean", "max"],
@@ -517,23 +206,111 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 100,
-            "max": 5000,
-            "alias": "Page In"
+            "min": 1000,
+            "max": 10000,
+            "alias": "Request Rate"
+          }
+        ],
+        "title": "Request Rate",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "max": 10,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 1
+                },
+                {
+                  "color": "red",
+                  "value": 5
+                }
+              ]
+            },
+            "unit": "percent"
           },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "id": 3,
+        "options": {
+          "legend": {
+            "calcs": ["mean", "max", "last"],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "targets": [
           {
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "B",
+            "refId": "A",
             "scenarioId": "random_walk",
-            "min": 50,
-            "max": 2000,
-            "alias": "Page Out"
+            "min": 0,
+            "max": 10,
+            "alias": "Error Rate"
           }
         ],
-        "title": "Memory Paging",
+        "title": "Error Rate",
         "type": "timeseries"
       },
       {
@@ -564,7 +341,149 @@
                 }
               ]
             },
-            "unit": "ops"
+            "unit": "short"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "2xx"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "green",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "4xx"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "yellow",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "5xx"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 4,
+        "options": {
+          "displayLabels": ["percent"],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "values": ["value", "percent"]
+          },
+          "pieType": "donut",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 8000,
+            "max": 9500,
+            "alias": "2xx"
+          },
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "B",
+            "scenarioId": "random_walk",
+            "min": 200,
+            "max": 800,
+            "alias": "4xx"
+          },
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "C",
+            "scenarioId": "random_walk",
+            "min": 50,
+            "max": 300,
+            "alias": "5xx"
+          }
+        ],
+        "title": "HTTP Status Codes Distribution",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 5000
+                },
+                {
+                  "color": "red",
+                  "value": 8000
+                }
+              ]
+            },
+            "unit": "short"
           },
           "overrides": []
         },
@@ -572,9 +491,9 @@
           "h": 8,
           "w": 8,
           "x": 0,
-          "y": 17
+          "y": 16
         },
-        "id": 6,
+        "id": 5,
         "options": {
           "colorMode": "value",
           "graphMode": "area",
@@ -595,17 +514,83 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 0,
+            "min": 3000,
             "max": 10000
           }
         ],
-        "title": "Page Faults",
+        "title": "Total Requests",
         "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 500,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 200
+                },
+                {
+                  "color": "red",
+                  "value": 400
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 16
+        },
+        "id": 6,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 50,
+            "max": 500
+          }
+        ],
+        "title": "Average Response Time",
+        "type": "gauge"
       }
     ],
     "schemaVersion": 38,
     "style": "dark",
-    "tags": ["monitoring", "memory", "performance"],
+    "tags": ["applications", "api", "performance"],
     "templating": {
       "list": []
     },
@@ -615,8 +600,8 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "Memory Metrics",
-    "uid": "memory-metrics",
+    "title": "API Performance",
+    "uid": "api-performance",
     "version": 1,
     "weekStart": ""
   }

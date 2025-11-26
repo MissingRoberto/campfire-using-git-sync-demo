@@ -5,8 +5,9 @@ Demonstrate promoting a dashboard from development to production using Git Sync.
 ## Overview
 
 - Two instances: Dev and Prod
-- Dev has 1 dashboard for promotion demo
-- Prod has monitoring dashboards + receives promoted dashboard
+- Both have same folder structure (applications/)
+- Dev has additional `new-dashboard.json` at root for promotion demo
+- Prod receives promoted dashboard as `promoted-from-dev.json`
 - Ngrok tunnel points to Prod (for Git Sync webhooks)
 - Promote changes from dev to prod via Git
 

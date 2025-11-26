@@ -2,7 +2,7 @@
   "apiVersion": "dashboard.grafana.app/v1beta1",
   "kind": "Dashboard",
   "metadata": {
-    "name": "docker-containers"
+    "name": "web-analytics"
   },
   "spec": {
     "annotations": {
@@ -21,19 +21,47 @@
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "thresholds"
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
             },
             "mappings": [],
+            "max": 10000,
+            "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
                   "color": "green",
                   "value": null
-                },
-                {
-                  "color": "blue",
-                  "value": 10
                 }
               ]
             },
@@ -42,23 +70,23 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 6,
-          "w": 6,
+          "h": 8,
+          "w": 12,
           "x": 0,
           "y": 0
         },
         "id": 1,
         "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
+          "legend": {
+            "calcs": ["mean", "max", "last"],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true
           },
-          "textMode": "auto"
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
         },
         "targets": [
           {
@@ -68,12 +96,13 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 15,
-            "max": 45
+            "min": 1000,
+            "max": 10000,
+            "alias": "Active Users"
           }
         ],
-        "title": "Running Containers",
-        "type": "stat"
+        "title": "Active Users",
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -83,81 +112,47 @@
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "thresholds"
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "bars",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
             },
             "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "yellow",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "short"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 6,
-          "w": 6,
-          "x": 6,
-          "y": 0
-        },
-        "id": 2,
-        "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
-          },
-          "textMode": "auto"
-        },
-        "targets": [
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "A",
-            "scenarioId": "random_walk",
+            "max": 50000,
             "min": 0,
-            "max": 5
-          }
-        ],
-        "title": "Stopped Containers",
-        "type": "stat"
-      },
-      {
-        "datasource": {
-          "type": "testdata",
-          "uid": "-- Grafana --"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
                   "color": "green",
                   "value": null
-                },
-                {
-                  "color": "yellow",
-                  "value": 5
-                },
-                {
-                  "color": "red",
-                  "value": 10
                 }
               ]
             },
@@ -166,23 +161,23 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 6,
-          "w": 6,
+          "h": 8,
+          "w": 12,
           "x": 12,
           "y": 0
         },
-        "id": 3,
+        "id": 2,
         "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
+          "legend": {
+            "calcs": ["sum", "mean"],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true
           },
-          "textMode": "auto"
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
         },
         "targets": [
           {
@@ -192,70 +187,13 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 0,
-            "max": 15
+            "min": 10000,
+            "max": 50000,
+            "alias": "Page Views"
           }
         ],
-        "title": "Total Restarts (Last Hour)",
-        "type": "stat"
-      },
-      {
-        "datasource": {
-          "type": "testdata",
-          "uid": "-- Grafana --"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "blue",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "short"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 6,
-          "w": 6,
-          "x": 18,
-          "y": 0
-        },
-        "id": 4,
-        "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
-          },
-          "textMode": "auto"
-        },
-        "targets": [
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 25,
-            "max": 80
-          }
-        ],
-        "title": "Docker Images",
-        "type": "stat"
+        "title": "Page Views",
+        "type": "timeseries"
       },
       {
         "datasource": {
@@ -309,11 +247,11 @@
                 },
                 {
                   "color": "yellow",
-                  "value": 70
+                  "value": 50
                 },
                 {
                   "color": "red",
-                  "value": 85
+                  "value": 70
                 }
               ]
             },
@@ -325,12 +263,12 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 6
+          "y": 8
         },
-        "id": 5,
+        "id": 3,
         "options": {
           "legend": {
-            "calcs": ["mean", "max", "last"],
+            "calcs": ["mean", "last"],
             "displayMode": "table",
             "placement": "bottom",
             "showLegend": true
@@ -348,45 +286,12 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 10,
-            "max": 80,
-            "alias": "web-app"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 15,
-            "max": 75,
-            "alias": "api-server"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "C",
-            "scenarioId": "random_walk",
             "min": 20,
-            "max": 90,
-            "alias": "database"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "D",
-            "scenarioId": "random_walk",
-            "min": 5,
-            "max": 60,
-            "alias": "cache"
+            "max": 80,
+            "alias": "Bounce Rate"
           }
         ],
-        "title": "Container CPU Usage",
+        "title": "Bounce Rate",
         "type": "timeseries"
       },
       {
@@ -430,24 +335,26 @@
               }
             },
             "mappings": [],
+            "max": 600,
+            "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green",
+                  "color": "red",
                   "value": null
                 },
                 {
                   "color": "yellow",
-                  "value": 1000
+                  "value": 60
                 },
                 {
-                  "color": "red",
-                  "value": 1500
+                  "color": "green",
+                  "value": 180
                 }
               ]
             },
-            "unit": "decmbytes"
+            "unit": "s"
           },
           "overrides": []
         },
@@ -455,12 +362,12 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 6
+          "y": 8
         },
-        "id": 6,
+        "id": 4,
         "options": {
           "legend": {
-            "calcs": ["mean", "max", "last"],
+            "calcs": ["mean", "max", "min"],
             "displayMode": "table",
             "placement": "bottom",
             "showLegend": true
@@ -478,45 +385,12 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 100,
-            "max": 800,
-            "alias": "web-app"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 200,
-            "max": 1000,
-            "alias": "api-server"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "C",
-            "scenarioId": "random_walk",
-            "min": 500,
-            "max": 2000,
-            "alias": "database"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "D",
-            "scenarioId": "random_walk",
-            "min": 50,
-            "max": 400,
-            "alias": "cache"
+            "min": 30,
+            "max": 600,
+            "alias": "Average Session Duration"
           }
         ],
-        "title": "Container Memory Usage",
+        "title": "Session Duration",
         "type": "timeseries"
       },
       {
@@ -527,37 +401,7 @@
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "bars",
-              "fillOpacity": 100,
-              "gradientMode": "none",
-              "hideFrom": {
-                "tooltip": false,
-                "viz": false,
-                "legend": false
-              },
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
+              "mode": "thresholds"
             },
             "mappings": [],
             "thresholds": {
@@ -566,34 +410,113 @@
                 {
                   "color": "green",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 5
                 }
               ]
             },
             "unit": "short"
           },
-          "overrides": []
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Home"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Products"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "green",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "About"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "purple",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Contact"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Checkout"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
         },
         "gridPos": {
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 14
+          "y": 16
         },
-        "id": 7,
+        "id": 5,
         "options": {
+          "displayLabels": ["percent"],
           "legend": {
-            "calcs": ["sum"],
             "displayMode": "table",
-            "placement": "bottom",
-            "showLegend": true
+            "placement": "right",
+            "showLegend": true,
+            "values": ["value", "percent"]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
           },
           "tooltip": {
-            "mode": "multi",
-            "sort": "desc"
+            "mode": "single",
+            "sort": "none"
           }
         },
         "targets": [
@@ -604,9 +527,9 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 0,
-            "max": 3,
-            "alias": "web-app"
+            "min": 15000,
+            "max": 20000,
+            "alias": "Home"
           },
           {
             "datasource": {
@@ -615,9 +538,9 @@
             },
             "refId": "B",
             "scenarioId": "random_walk",
-            "min": 0,
-            "max": 2,
-            "alias": "api-server"
+            "min": 8000,
+            "max": 12000,
+            "alias": "Products"
           },
           {
             "datasource": {
@@ -626,9 +549,9 @@
             },
             "refId": "C",
             "scenarioId": "random_walk",
-            "min": 0,
-            "max": 1,
-            "alias": "database"
+            "min": 3000,
+            "max": 6000,
+            "alias": "About"
           },
           {
             "datasource": {
@@ -637,18 +560,95 @@
             },
             "refId": "D",
             "scenarioId": "random_walk",
-            "min": 0,
-            "max": 4,
-            "alias": "cache"
+            "min": 2000,
+            "max": 4000,
+            "alias": "Contact"
+          },
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "E",
+            "scenarioId": "random_walk",
+            "min": 5000,
+            "max": 8000,
+            "alias": "Checkout"
           }
         ],
-        "title": "Container Restarts",
-        "type": "timeseries"
+        "title": "Top Pages by Views",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 5000
+                },
+                {
+                  "color": "blue",
+                  "value": 8000
+                }
+              ]
+            },
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 16
+        },
+        "id": 6,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "textMode": "auto"
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 3000,
+            "max": 10000
+          }
+        ],
+        "title": "Current Active Users",
+        "type": "stat"
       }
     ],
     "schemaVersion": 38,
     "style": "dark",
-    "tags": ["infrastructure", "docker", "containers"],
+    "tags": ["applications", "web", "analytics"],
     "templating": {
       "list": []
     },
@@ -658,8 +658,8 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "Docker Containers",
-    "uid": "docker-containers",
+    "title": "Web Analytics",
+    "uid": "web-analytics",
     "version": 1,
     "weekStart": ""
   }
