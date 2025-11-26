@@ -141,14 +141,18 @@ Open your ngrok URL (e.g., `https://your-subdomain.ngrok-free.app`)
 
 ### Configure Git Sync
 
-1. In Grafana, go to **Administration** → **Git Sync**
-2. Click **"Connect to GitHub"**
-3. Enter configuration:
-   - **Repository**: `https://github.com/MissingRoberto/campfire-using-git-sync-demo`
+1. In Grafana, go to **Administration** → **Provisioning**
+2. Click **"Configure Git Sync"**
+3. Enter connection details:
+   - **Personal Access Token**: Your GitHub PAT (with repo, pull requests, webhooks permissions)
+   - **Repository URL**: `https://github.com/MissingRoberto/campfire-using-git-sync-demo`
    - **Branch**: `main`
    - **Path**: Your scenario path (e.g., `scenario-1-default/grafana/`)
-   - **PAT**: Your GitHub Personal Access Token
-4. Click **"Connect"** and enable Auto Sync
+4. Choose synchronization type
+5. Configure display name and update interval
+6. Click **"Finish"** to complete setup
+
+📖 **Detailed UI Guide**: See [GIT-SYNC-UI-GUIDE.md](GIT-SYNC-UI-GUIDE.md) for complete navigation paths and workflows
 
 ## 🔧 Configuration
 
@@ -160,11 +164,9 @@ Each scenario uses a `.env` file:
 # Ngrok Configuration
 NGROK_AUTHTOKEN=your_ngrok_authtoken_here
 NGROK_SUBDOMAIN=your-subdomain.ngrok-free.app
-
-# Grafana Credentials
-GF_ADMIN_USER=admin
-GF_ADMIN_PASSWORD=admin
 ```
+
+**Grafana Login**: Username and password are both `admin` (hardcoded in docker-compose.yml)
 
 ### Feature Flags
 
@@ -195,23 +197,29 @@ GF_RENDERING_CALLBACK_URL=http://grafana:3000/
 ### Creating Dashboards
 
 **Option A: In Grafana UI**
-1. Create dashboard
+1. Create dashboard in Grafana
 2. Add panels and configure
-3. Save → Auto-commits to Git
-4. Click "Open Pull Request"
+3. Click Save
+4. In save dialog:
+   - Choose workflow: "Push to main" OR "Create new branch"
+   - Enter commit message in Comment field
+   - Click Save
+5. If using branch workflow, click "Open Pull Request" button
 
 **Option B: In Git**
 1. Create dashboard JSON in CRD format
 2. Commit and push to repository
-3. Grafana syncs within 60 seconds
+3. Grafana syncs within 60 seconds (or click Pull button in Administration → Provisioning)
 
 ### Pull Request Review
 
 When you create a PR from Grafana:
-- ✅ Automated comment with dashboard links
-- ✅ Before/after screenshots
-- ✅ Live preview of changes
-- ✅ Merge triggers auto-sync to Grafana
+- ✅ Grafana adds automated comment with:
+  - Link to original dashboard
+  - Dashboard preview link
+  - Before/after screenshots (if image renderer enabled)
+- ✅ Team members review in GitHub
+- ✅ Merge triggers auto-sync to Grafana (within polling interval)
 
 ### Dashboard Format
 
