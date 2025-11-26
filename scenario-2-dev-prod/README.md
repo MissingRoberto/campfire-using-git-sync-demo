@@ -71,7 +71,7 @@ make ngrok-url
 make promote
 
 # 4. Commit and push
-git add prod/new-dashboard.json
+git add prod/promoted-from-dev.json
 git commit -m "Promote dashboard to prod"
 git push
 
@@ -86,10 +86,10 @@ make open-prod
 # 2. Save changes
 
 # 3. Copy dashboard file
-cp dev/new-dashboard.json prod/new-dashboard.json
+cp dev/new-dashboard.json prod/promoted-from-dev.json
 
 # 4. Commit and push
-git add prod/new-dashboard.json
+git add prod/promoted-from-dev.json
 git commit -m "Promote dashboard to prod"
 git push
 

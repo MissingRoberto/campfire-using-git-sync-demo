@@ -81,11 +81,11 @@ promote: ## Promote dev dashboard to prod
 		exit 1; \
 	fi
 	@mkdir -p prod
-	@cp dev/new-dashboard.json prod/new-dashboard.json
-	@echo "✓ Dashboard copied to prod/"
+	@cp dev/new-dashboard.json prod/promoted-from-dev.json
+	@echo "✓ Dashboard promoted to prod/promoted-from-dev.json"
 	@echo ""
 	@echo "Next steps:"
-	@echo "  1. Commit changes: git add prod/new-dashboard.json && git commit -m 'Promote dashboard to prod' && git push"
+	@echo "  1. Commit changes: git add prod/promoted-from-dev.json && git commit -m 'Promote dashboard to prod' && git push"
 	@echo "  2. Wait for Git Sync (60s) or force sync in Prod Grafana UI"
 	@echo "  3. Verify in Prod: make open-prod"
 
