@@ -105,12 +105,14 @@ make clean         # Remove all containers and volumes
 ### Creating Dashboards
 
 **In Grafana**:
+
 1. Create dashboard
 2. Save and choose: "Push to main" or "Create new branch"
 3. Enter commit message
 4. Click "Open Pull Request" if using branch workflow
 
 **In Git**:
+
 1. Create dashboard JSON in CRD format
 2. Commit and push
 3. Grafana syncs automatically (60s interval)
@@ -155,13 +157,11 @@ grafanactl --config=grafanactl.yaml config get-contexts
 grafanactl --config=grafanactl.yaml config use-context prod
 
 # List dashboards
-grafanactl --config=grafanactl.yaml get dashboards
+grafanactl --config=grafanactl.yaml resources get dashboards
 
 # Get specific dashboard
-grafanactl --config=grafanactl.yaml get dashboard <uid>
+grafanactl --config=grafanactl.yaml resources get dashboard/<name>
 
-# Push dashboard to Grafana
-grafanactl --config=grafanactl.yaml push dashboard <file.json>
 ```
 
 ### Context Names by Scenario
