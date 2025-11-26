@@ -1,4 +1,4 @@
-.PHONY: help start stop restart logs open clean
+.PHONY: help start stop restart logs open clean setup-git-sync
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -20,10 +20,17 @@ start: ## Start all services
 	@echo ""
 	@echo "Login: admin / admin"
 	@echo ""
+	@echo "Next step (optional):"
+	@echo "  make setup-git-sync  - Configure Git Sync via grafanactl"
+	@echo ""
 	@echo "Quick commands:"
 	@echo "  make open       - Open Grafana in browser"
 	@echo "  make logs       - View logs"
 	@echo "  make ngrok-url  - Get ngrok public URL"
+
+setup-git-sync: ## Configure Git Sync repository (optional)
+	@echo "Configuring Git Sync..."
+	@./setup-git-sync.sh
 
 stop: ## Stop all services
 	docker-compose --env-file ../.env down

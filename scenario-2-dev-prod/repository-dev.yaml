@@ -1,0 +1,22 @@
+apiVersion: provisioning.grafana.app/v0alpha1
+kind: Repository
+metadata:
+  name: git-sync-dev
+spec:
+  title: Git Sync Dev
+  type: github
+  github:
+    url: https://github.com/${GITHUB_REPO}
+    branch: ${GITHUB_BRANCH}
+    path: scenario-2-dev-prod/dev
+    generateDashboardPreviews: true
+  sync:
+    enabled: true
+    intervalSeconds: 60
+    target: folder
+  workflows:
+    - write
+    - branch
+secure:
+  token:
+    value: ${GITHUB_PAT}

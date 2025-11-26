@@ -1,25 +1,26 @@
-.PHONY: help start stop restart logs logs-master logs-replica logs-lb status health open open-master open-replica open-lb open-all ngrok-url failover-to-master failover-to-replica clean
+.PHONY: help start stop restart logs logs-master logs-replica logs-lb status health open open-master open-replica open-lb open-all ngrok-url failover-to-master failover-to-replica clean setup-git-sync
 
 help:
 	@echo "Available commands:"
-	@echo "  make start              - Start master, replica, and load balancer"
-	@echo "  make stop               - Stop all services"
-	@echo "  make restart            - Restart all services"
-	@echo "  make logs               - View logs from all services"
-	@echo "  make logs-master        - View logs from master"
-	@echo "  make logs-replica       - View logs from replica"
-	@echo "  make logs-lb            - View logs from load balancer"
-	@echo "  make status             - Show container status"
-	@echo "  make health             - Check health of all services"
-	@echo "  make open               - Open load balancer in browser"
-	@echo "  make open-master        - Open master Grafana"
-	@echo "  make open-replica       - Open replica Grafana"
-	@echo "  make open-lb            - Open load balancer"
-	@echo "  make open-all           - Open all interfaces"
-	@echo "  make ngrok-url          - Get public ngrok URL"
-	@echo "  make failover-to-master - Failover ngrok to master"
-	@echo "  make failover-to-replica- Failover ngrok to replica"
-	@echo "  make clean              - Stop and remove all containers and volumes"
+	@echo "  make start               - Start master, replica, and load balancer"
+	@echo "  make setup-git-sync      - Configure Git Sync for master and replica"
+	@echo "  make stop                - Stop all services"
+	@echo "  make restart             - Restart all services"
+	@echo "  make logs                - View logs from all services"
+	@echo "  make logs-master         - View logs from master"
+	@echo "  make logs-replica        - View logs from replica"
+	@echo "  make logs-lb             - View logs from load balancer"
+	@echo "  make status              - Show container status"
+	@echo "  make health              - Check health of all services"
+	@echo "  make open                - Open load balancer in browser"
+	@echo "  make open-master         - Open master Grafana"
+	@echo "  make open-replica        - Open replica Grafana"
+	@echo "  make open-lb             - Open load balancer"
+	@echo "  make open-all            - Open all interfaces"
+	@echo "  make ngrok-url           - Get public ngrok URL"
+	@echo "  make failover-to-master  - Failover ngrok to master"
+	@echo "  make failover-to-replica - Failover ngrok to replica"
+	@echo "  make clean               - Stop and remove all containers and volumes"
 
 start:
 	docker-compose --env-file ../.env up -d
@@ -33,9 +34,16 @@ start:
 	@echo ""
 	@echo "Login: admin / admin"
 	@echo ""
+	@echo "Next step:"
+	@echo "  make setup-git-sync      - Configure Git Sync for both instances"
+	@echo ""
 	@echo "Get public URL:        make ngrok-url"
 	@echo "Failover to replica:   make failover-to-replica"
 	@echo "Failover to master:    make failover-to-master"
+
+setup-git-sync: ## Configure Git Sync repositories for master and replica
+	@echo "Configuring Git Sync..."
+	@./setup-git-sync.sh
 
 stop:
 	docker-compose --env-file ../.env down

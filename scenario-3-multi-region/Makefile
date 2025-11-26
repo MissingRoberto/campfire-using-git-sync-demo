@@ -1,21 +1,22 @@
-.PHONY: help start stop restart logs logs-us logs-eu status health open open-us open-eu open-all ngrok-url clean
+.PHONY: help start stop restart logs logs-us logs-eu status health open open-us open-eu open-all ngrok-url clean setup-git-sync
 
 help:
 	@echo "Available commands:"
-	@echo "  make start       - Start both US and EU Grafana instances"
-	@echo "  make stop        - Stop all services"
-	@echo "  make restart     - Restart all services"
-	@echo "  make logs        - View logs from all services"
-	@echo "  make logs-us     - View logs from US region"
-	@echo "  make logs-eu     - View logs from EU region"
-	@echo "  make status      - Show container status"
-	@echo "  make health      - Check health of all services"
-	@echo "  make open        - Open both Grafana instances in browser"
-	@echo "  make open-us     - Open US region Grafana"
-	@echo "  make open-eu     - Open EU region Grafana"
-	@echo "  make open-all    - Open both instances + ngrok dashboard"
-	@echo "  make ngrok-url   - Get public ngrok URL"
-	@echo "  make clean       - Stop and remove all containers and volumes"
+	@echo "  make start           - Start both US and EU Grafana instances"
+	@echo "  make setup-git-sync  - Configure Git Sync for both regions"
+	@echo "  make stop            - Stop all services"
+	@echo "  make restart         - Restart all services"
+	@echo "  make logs            - View logs from all services"
+	@echo "  make logs-us         - View logs from US region"
+	@echo "  make logs-eu         - View logs from EU region"
+	@echo "  make status          - Show container status"
+	@echo "  make health          - Check health of all services"
+	@echo "  make open            - Open both Grafana instances in browser"
+	@echo "  make open-us         - Open US region Grafana"
+	@echo "  make open-eu         - Open EU region Grafana"
+	@echo "  make open-all        - Open both instances + ngrok dashboard"
+	@echo "  make ngrok-url       - Get public ngrok URL"
+	@echo "  make clean           - Stop and remove all containers and volumes"
 
 start:
 	docker-compose --env-file ../.env up -d
@@ -28,7 +29,14 @@ start:
 	@echo ""
 	@echo "Login: admin / admin"
 	@echo ""
+	@echo "Next step:"
+	@echo "  make setup-git-sync   - Configure Git Sync for both regions"
+	@echo ""
 	@echo "Get public URL: make ngrok-url"
+
+setup-git-sync: ## Configure Git Sync repositories for US and EU regions
+	@echo "Configuring Git Sync..."
+	@./setup-git-sync.sh
 
 stop:
 	docker-compose --env-file ../.env down

@@ -43,47 +43,62 @@ High availability setup with master-replica instances and easy failover.
 ## Prerequisites
 
 - Docker & Docker Compose
-- Ngrok account ([ngrok.com](https://ngrok.com))
-- GitHub account with Personal Access Token
-- grafanactl CLI (optional, for command-line management)
+- Ngrok account with static subdomain ([ngrok.com](https://ngrok.com))
+- GitHub account with Personal Access Token (scopes: repo, pull_requests, webhooks)
+- grafanactl CLI ([installation instructions](https://grafana.github.io/grafanactl/))
 
 ## Quick Start
 
-### 1. Configure Environment
+### 1. Fork this Repository
+
+Click the "Fork" button on GitHub to create your own copy of this repository. You'll need to push changes to your fork for Git Sync to work.
+
+### 2. Configure Environment
 
 ```bash
 # At repository root
 cp .env.example .env
-# Edit .env with your ngrok token
 ```
 
-### 2. Choose and Start a Scenario
+Edit `.env` and configure:
+- `NGROK_AUTHTOKEN`: Your ngrok auth token
+- `NGROK_SUBDOMAIN`: Your static ngrok subdomain (e.g., `https://your-subdomain.ngrok-free.app`)
+- `GITHUB_PAT`: Your GitHub Personal Access Token
+- `GITHUB_REPO`: Your forked repository (e.g., `yourusername/campfire-using-git-sync-demo`)
+- `GITHUB_BRANCH`: Branch to sync (usually `main`)
+
+### 3. Choose and Start a Scenario
 
 ```bash
-cd scenario-1-default
+# Example: Start scenario 2
+cd scenario-2-dev-prod
 make start
 ```
 
-### 3. Get Ngrok URL
+### 4. Configure Git Sync
+
+After services start, run the setup script to configure Git Sync:
 
 ```bash
-make ngrok-url
+make setup-git-sync
 ```
 
-### 4. Access Grafana
+This will:
+- Wait for Grafana instances to be ready
+- Create Repository resources via grafanactl
+- Configure bidirectional sync with your GitHub fork
 
-Open the ngrok URL and login with `admin` / `admin`
+### 5. Verify Setup
 
-### 5. Configure Git Sync
+```bash
+# Get public URL
+make ngrok-url
 
-1. Go to **Administration** → **Provisioning**
-2. Click **"Configure Git Sync"**
-3. Enter:
-   - **Repository**: `https://github.com/MissingRoberto/campfire-using-git-sync-demo`
-   - **Branch**: `main`
-   - **Path**: Scenario-specific path (see scenario README)
-   - **Personal Access Token**: Your GitHub PAT
-4. Click **"Finish"**
+# Check Git Sync status
+grafanactl --config=grafanactl.yaml resources get repositories
+```
+
+Access Grafana at `http://localhost:3000` (or the appropriate port) and login with `admin` / `admin`. Your dashboards should be synced from Git!
 
 ## Makefile Commands
 

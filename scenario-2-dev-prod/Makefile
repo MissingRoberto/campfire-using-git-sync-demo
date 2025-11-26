@@ -1,4 +1,4 @@
-.PHONY: help start stop restart logs open clean
+.PHONY: help start stop restart logs open clean setup-git-sync
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -21,6 +21,9 @@ start: ## Start all services (dev + prod)
 	@echo ""
 	@echo "Login: admin / admin"
 	@echo ""
+	@echo "Next step:"
+	@echo "  make setup-git-sync   - Configure Git Sync for both instances"
+	@echo ""
 	@echo "Workflow:"
 	@echo "  1. Edit dashboard in Dev (port 3000)"
 	@echo "  2. Promote to Prod: make promote"
@@ -31,6 +34,10 @@ start: ## Start all services (dev + prod)
 	@echo "  make open-prod  - Open Prod Grafana"
 	@echo "  make open-all   - Open both + ngrok dashboard"
 	@echo "  make promote    - Promote dev dashboard to prod"
+
+setup-git-sync: ## Configure Git Sync repositories for dev and prod
+	@echo "Configuring Git Sync..."
+	@./setup-git-sync.sh
 
 stop: ## Stop all services
 	docker-compose --env-file ../.env down

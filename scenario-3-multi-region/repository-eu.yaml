@@ -1,0 +1,22 @@
+apiVersion: provisioning.grafana.app/v0alpha1
+kind: Repository
+metadata:
+  name: git-sync-eu
+spec:
+  title: Git Sync EU Region
+  type: github
+  github:
+    url: https://github.com/${GITHUB_REPO}
+    branch: ${GITHUB_BRANCH}
+    path: scenario-3-multi-region/shared
+    generateDashboardPreviews: true
+  sync:
+    enabled: true
+    intervalSeconds: 60
+    target: folder
+  workflows:
+    - write
+    - branch
+secure:
+  token:
+    value: ${GITHUB_PAT}
