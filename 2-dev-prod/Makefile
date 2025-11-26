@@ -7,7 +7,7 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
 
 start: ## Start all services (dev + prod)
-	@echo "Starting scenario-2-dev-prod..."
+	@echo "Starting 2-dev-prod..."
 	docker-compose --env-file ../.env up -d
 	@echo "Waiting for services to be ready..."
 	@sleep 5
@@ -37,10 +37,10 @@ start: ## Start all services (dev + prod)
 
 setup-git-sync: ## Configure Git Sync repositories for dev and prod
 	@echo "Configuring Git Sync..."
-	@../scripts/setup-git-sync.sh scenario-2-dev-prod dev repository-dev.yaml prod repository-prod.yaml
+	@../scripts/setup-git-sync.sh 2-dev-prod dev repository-dev.yaml prod repository-prod.yaml
 	@echo ""
-	@echo "Dev:  http://localhost:3000 - syncing from scenario-2-dev-prod/dev"
-	@echo "Prod: http://localhost:3001 - syncing from scenario-2-dev-prod/prod"
+	@echo "Dev:  http://localhost:3000 - syncing from 2-dev-prod/dev"
+	@echo "Prod: http://localhost:3001 - syncing from 2-dev-prod/prod"
 
 stop: ## Stop all services
 	docker-compose --env-file ../.env down

@@ -8,7 +8,7 @@ This scenario demonstrates how multiple teams can manage their own dashboards wi
 ┌─────────────────────────────────────────────────────────────┐
 │                    GitHub Repository                         │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │ scenario-5-multi-team/                               │   │
+│  │ 5-multi-team/                               │   │
 │  │  ├── team-platform/grafana/  (Platform dashboards)   │   │
 │  │  └── team-data/grafana/      (Data dashboards)       │   │
 │  └──────────────────────────────────────────────────────┘   │
@@ -65,12 +65,12 @@ make open
 
 ### Platform Team
 - **Folder**: Platform Team
-- **Git Path**: `scenario-5-multi-team/team-platform/grafana/`
+- **Git Path**: `5-multi-team/team-platform/grafana/`
 - **Focus**: Infrastructure and platform services
 
 ### Data Team
 - **Folder**: Data Team
-- **Git Path**: `scenario-5-multi-team/team-data/grafana/`
+- **Git Path**: `5-multi-team/team-data/grafana/`
 - **Focus**: Data pipelines and analytics
 
 ## Workflow
@@ -113,11 +113,11 @@ This scenario shows teams using the same repository with different paths, but yo
   ```yaml
   # Platform Team
   github:
-    path: scenario-5-multi-team/team-platform/grafana
+    path: 5-multi-team/team-platform/grafana
 
   # Data Team
   github:
-    path: scenario-5-multi-team/team-data/grafana
+    path: 5-multi-team/team-data/grafana
   ```
 
 - **Any Combination**: Mix and match based on your team's needs

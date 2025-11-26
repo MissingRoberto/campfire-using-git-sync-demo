@@ -7,7 +7,7 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
 
 start: ## Start all services
-	@echo "Starting scenario-5-multi-team..."
+	@echo "Starting 5-multi-team..."
 	docker-compose --env-file ../.env up -d
 	@echo "Waiting for services to be ready..."
 	@sleep 5
@@ -25,8 +25,8 @@ start: ## Start all services
 	@echo ""
 	@echo "Workflow:"
 	@echo "  1. Two Git Sync repositories configured in single Grafana instance"
-	@echo "  2. Platform Team dashboards: scenario-5-multi-team/team-platform/grafana"
-	@echo "  3. Data Team dashboards:     scenario-5-multi-team/team-data/grafana"
+	@echo "  2. Platform Team dashboards: 5-multi-team/team-platform/grafana"
+	@echo "  3. Data Team dashboards:     5-multi-team/team-data/grafana"
 	@echo "  4. Each team's dashboards appear in separate folders"
 	@echo ""
 	@echo "Quick commands:"
@@ -37,14 +37,14 @@ start: ## Start all services
 setup-git-sync: ## Configure Git Sync repositories for both teams
 	@echo "Configuring Git Sync..."
 	@echo "Setting up Platform Team repository..."
-	@../scripts/setup-git-sync.sh scenario-5-multi-team default repository-platform.yaml
+	@../scripts/setup-git-sync.sh 5-multi-team default repository-platform.yaml
 	@echo ""
 	@echo "Setting up Data Team repository..."
-	@../scripts/setup-git-sync.sh scenario-5-multi-team default repository-data.yaml
+	@../scripts/setup-git-sync.sh 5-multi-team default repository-data.yaml
 	@echo ""
 	@echo "✓ Git Sync configured for both teams!"
-	@echo "Platform Team: syncing from scenario-5-multi-team/team-platform/grafana"
-	@echo "Data Team:     syncing from scenario-5-multi-team/team-data/grafana"
+	@echo "Platform Team: syncing from 5-multi-team/team-platform/grafana"
+	@echo "Data Team:     syncing from 5-multi-team/team-data/grafana"
 
 stop: ## Stop all services
 	docker-compose --env-file ../.env down

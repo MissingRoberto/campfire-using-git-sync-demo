@@ -3,7 +3,7 @@
 # Common Git Sync setup script
 # Usage: ./scripts/setup-git-sync.sh <scenario-dir> <context1> <repo-file1> [<context2> <repo-file2> ...]
 #
-# Example: ./scripts/setup-git-sync.sh scenario-2-dev-prod dev repository-dev.yaml prod repository-prod.yaml
+# Example: ./scripts/setup-git-sync.sh 2-dev-prod dev repository-dev.yaml prod repository-prod.yaml
 
 set -e
 

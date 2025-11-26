@@ -1,14 +1,14 @@
 apiVersion: provisioning.grafana.app/v0alpha1
 kind: Repository
 metadata:
-  name: git-sync-eu
+  name: git-sync-platform
 spec:
-  title: Git Sync EU Region
+  title: Git Sync Platform Team
   type: github
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: scenario-3-multi-region/shared
+    path: 5-multi-team/team-platform/grafana
     generateDashboardPreviews: true
   sync:
     enabled: true

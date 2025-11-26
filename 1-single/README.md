@@ -28,7 +28,7 @@ cp .env.example .env
 # Edit .env with your ngrok token
 
 # Start this scenario
-cd scenario-1-default
+cd 1-single
 make start
 
 # Get public URL
@@ -42,7 +42,7 @@ Login: `admin` / `admin`
 
 ## Configure Git Sync
 
-**Path for this scenario**: `scenario-1-default/grafana/`
+**Path for this scenario**: `1-single/grafana/`
 
 See [main README](../README.md#quick-start) for full Git Sync setup instructions.
 

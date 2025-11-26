@@ -63,7 +63,7 @@ cp .env.example .env
 # Edit .env with your ngrok token
 
 # Start this scenario
-cd scenario-4-master-replica
+cd 4-master-replica
 make start
 
 # Open all interfaces
@@ -82,7 +82,7 @@ Login: `admin` / `admin`
 
 ### Both Master and Replica
 
-**Path**: `scenario-4-master-replica/shared/`
+**Path**: `4-master-replica/shared/`
 
 Both master and replica instances should be configured with the same path to ensure they sync identical dashboards.
 

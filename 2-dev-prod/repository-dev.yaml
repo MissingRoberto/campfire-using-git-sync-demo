@@ -1,14 +1,14 @@
 apiVersion: provisioning.grafana.app/v0alpha1
 kind: Repository
 metadata:
-  name: git-sync-default
+  name: git-sync-dev
 spec:
-  title: Git Sync Default
+  title: Git Sync Dev
   type: github
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: scenario-1-default/grafana
+    path: 2-dev-prod/dev
     generateDashboardPreviews: true
   sync:
     enabled: true

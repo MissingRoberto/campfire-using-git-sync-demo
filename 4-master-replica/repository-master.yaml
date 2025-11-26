@@ -1,14 +1,14 @@
 apiVersion: provisioning.grafana.app/v0alpha1
 kind: Repository
 metadata:
-  name: git-sync-dev
+  name: git-sync-master
 spec:
-  title: Git Sync Dev
+  title: Git Sync Master
   type: github
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: scenario-2-dev-prod/dev
+    path: 4-master-replica/shared
     generateDashboardPreviews: true
   sync:
     enabled: true

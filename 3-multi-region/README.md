@@ -53,7 +53,7 @@ cp .env.example .env
 # Edit .env with your ngrok token
 
 # Start this scenario
-cd scenario-3-multi-region
+cd 3-multi-region
 make start
 
 # Open both instances
@@ -70,7 +70,7 @@ Login: `admin` / `admin`
 
 ### Both Instances
 
-**Path**: `scenario-3-multi-region/shared/`
+**Path**: `3-multi-region/shared/`
 
 Both US and EU instances should be configured with the same path to ensure they sync identical dashboards.
 

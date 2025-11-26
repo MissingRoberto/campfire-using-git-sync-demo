@@ -1,14 +1,14 @@
 apiVersion: provisioning.grafana.app/v0alpha1
 kind: Repository
 metadata:
-  name: git-sync-prod
+  name: git-sync-replica
 spec:
-  title: Git Sync Prod
+  title: Git Sync Replica
   type: github
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: scenario-2-dev-prod/prod
+    path: 4-master-replica/shared
     generateDashboardPreviews: true
   sync:
     enabled: true

@@ -54,7 +54,7 @@ cp .env.example .env
 # Edit .env with your ngrok token
 
 # Start this scenario
-cd scenario-2-dev-prod
+cd 2-dev-prod
 make start
 
 # Open both instances
@@ -71,11 +71,11 @@ Login: `admin` / `admin`
 
 ### Dev Instance (http://localhost:3000)
 
-**Path**: `scenario-2-dev-prod/dev/`
+**Path**: `2-dev-prod/dev/`
 
 ### Prod Instance (http://localhost:3001 or ngrok URL)
 
-**Path**: `scenario-2-dev-prod/prod/`
+**Path**: `2-dev-prod/prod/`
 
 See [main README](../README.md#quick-start) for full Git Sync setup instructions.
 
@@ -111,11 +111,11 @@ This scenario shows dev and prod using the same repository with different paths,
   ```yaml
   # Dev
   github:
-    path: scenario-2-dev-prod/dev
+    path: 2-dev-prod/dev
 
   # Prod
   github:
-    path: scenario-2-dev-prod/prod
+    path: 2-dev-prod/prod
   ```
 
 - **Any Combination**: Mix and match based on your workflow needs

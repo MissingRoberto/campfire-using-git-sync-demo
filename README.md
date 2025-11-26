@@ -20,31 +20,31 @@ Demonstration of Grafana's Git Sync feature with five practical scenarios coveri
 
 Single Grafana instance with Git Sync.
 
-[→ Scenario 1 Guide](scenario-1-default/README.md)
+[→ Scenario 1 Guide](1-single/README.md)
 
 ### Scenario 2: Dev/Prod Environments
 
 Two instances demonstrating dashboard promotion workflow.
 
-[→ Scenario 2 Guide](scenario-2-dev-prod/README.md)
+[→ Scenario 2 Guide](2-dev-prod/README.md)
 
 ### Scenario 3: Multi-Region Deployment
 
 Multiple instances syncing from the same shared directory.
 
-[→ Scenario 3 Guide](scenario-3-multi-region/README.md)
+[→ Scenario 3 Guide](3-multi-region/README.md)
 
 ### Scenario 4: Master-Replica with Load Balancer
 
 High availability setup with master-replica instances and easy failover.
 
-[→ Scenario 4 Guide](scenario-4-master-replica/README.md)
+[→ Scenario 4 Guide](4-master-replica/README.md)
 
 ### Scenario 5: Multi-Team Setup
 
 Single Grafana instance with multiple Git Sync repositories for different teams.
 
-[→ Scenario 5 Guide](scenario-5-multi-team/README.md)
+[→ Scenario 5 Guide](5-multi-team/README.md)
 
 ## Prerequisites
 
@@ -77,7 +77,7 @@ Edit `.env` and configure:
 
 ```bash
 # Example: Start scenario 2
-cd scenario-2-dev-prod
+cd 2-dev-prod
 make start
 ```
 
@@ -169,7 +169,7 @@ brew install grafanactl  # macOS
 
 ```bash
 # Navigate to scenario directory
-cd scenario-2-dev-prod
+cd 2-dev-prod
 
 # List available contexts
 grafanactl --config=grafanactl.yaml config get-contexts

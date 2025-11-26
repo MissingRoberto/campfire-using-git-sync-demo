@@ -7,7 +7,7 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
 
 start: ## Start all services
-	@echo "Starting scenario-1-default..."
+	@echo "Starting 1-single..."
 	docker-compose --env-file ../.env up -d
 	@echo "Waiting for services to be ready..."
 	@sleep 5
@@ -30,9 +30,9 @@ start: ## Start all services
 
 setup-git-sync: ## Configure Git Sync repository (optional)
 	@echo "Configuring Git Sync..."
-	@../scripts/setup-git-sync.sh scenario-1-default default repository.yaml
+	@../scripts/setup-git-sync.sh 1-single default repository.yaml
 	@echo ""
-	@echo "Grafana: http://localhost:3000 - syncing from scenario-1-default/grafana"
+	@echo "Grafana: http://localhost:3000 - syncing from 1-single/grafana"
 
 stop: ## Stop all services
 	docker-compose --env-file ../.env down
