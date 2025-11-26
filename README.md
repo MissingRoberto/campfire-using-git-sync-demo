@@ -1,8 +1,18 @@
 # Grafana Git Sync Demo Repository
 
-Demonstration of Grafana's Git Sync feature with four practical scenarios.
+> **Last Updated:** November 2024
+>
+> **Purpose:** This repository provides practical demonstrations of Grafana's Git Sync feature through four real-world scenarios. It's designed to help DevOps engineers, SREs, and Grafana users learn how to implement bidirectional synchronization between Grafana dashboards and Git repositories.
 
-> ⚠️ **Note**: Git Sync is experimental. Not recommended for production.
+## ⚠️ Important Disclaimers
+
+- **Experimental Feature**: Git Sync is currently in an experimental phase and may have limitations or breaking changes. While it represents Grafana's first step toward comprehensive Observability as Code, **we don't recommend using it in production or critical environments**.
+
+- **Evolving Documentation**: This documentation reflects the state of Git Sync as of November 2024. As this feature is actively evolving, some instructions may become outdated. Please refer to the [official Grafana Git Sync documentation](https://grafana.com/docs/grafana/latest/as-code/observability-as-code/provision-resources/intro-git-sync/) for the latest information.
+
+## Overview
+
+Demonstration of Grafana's Git Sync feature with four practical scenarios covering common deployment patterns.
 
 ## Scenarios
 
