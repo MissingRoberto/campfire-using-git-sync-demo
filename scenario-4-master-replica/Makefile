@@ -22,7 +22,7 @@ help:
 	@echo "  make clean              - Stop and remove all containers and volumes"
 
 start:
-	docker-compose up -d
+	docker-compose --env-file ../.env up -d
 	@echo "Waiting for services to be healthy..."
 	@sleep 5
 	@echo ""
@@ -38,28 +38,28 @@ start:
 	@echo "Failover to master:    make failover-to-master"
 
 stop:
-	docker-compose down
+	docker-compose --env-file ../.env down
 
 restart: stop start
 
 logs:
-	docker-compose logs -f
+	docker-compose --env-file ../.env logs -f
 
 logs-master:
-	docker-compose logs -f grafana-master
+	docker-compose --env-file ../.env logs -f grafana-master
 
 logs-replica:
-	docker-compose logs -f grafana-replica
+	docker-compose --env-file ../.env logs -f grafana-replica
 
 logs-lb:
-	docker-compose logs -f nginx
+	docker-compose --env-file ../.env logs -f nginx
 
 status:
-	docker-compose ps
+	docker-compose --env-file ../.env ps
 
 health:
 	@echo "Checking service health..."
-	@docker-compose ps
+	@docker-compose --env-file ../.env ps
 	@echo ""
 	@echo "Master Health:"
 	@curl -s http://localhost:3000/api/health | grep -q "ok" && echo "✓ Master is healthy" || echo "✗ Master is not responding"
@@ -130,27 +130,27 @@ ngrok-url:
 
 failover-to-master:
 	@echo "Performing failover to master..."
-	@docker-compose stop ngrok
-	@docker-compose rm -f ngrok
-	@sed -i.bak 's/command: http --url=$${NGROK_SUBDOMAIN} grafana-replica:3000/command: http --url=$${NGROK_SUBDOMAIN} grafana-master:3000/' docker-compose.yml
-	@docker-compose up -d ngrok
+	@docker-compose --env-file ../.env stop ngrok
+	@docker-compose --env-file ../.env rm -f ngrok
+	@sed -i.bak 's/grafana-replica:3000/grafana-master:3000/' docker-compose.yml
+	@docker-compose --env-file ../.env up -d ngrok
 	@echo "Ngrok now points to master"
-	@echo "New URL:"
+	@echo "URL:"
 	@sleep 2
 	@make ngrok-url
 
 failover-to-replica:
 	@echo "Performing failover to replica..."
-	@docker-compose stop ngrok
-	@docker-compose rm -f ngrok
-	@sed -i.bak 's/command: http --url=$${NGROK_SUBDOMAIN} grafana-master:3000/command: http --url=$${NGROK_SUBDOMAIN} grafana-replica:3000/' docker-compose.yml
-	@docker-compose up -d ngrok
+	@docker-compose --env-file ../.env stop ngrok
+	@docker-compose --env-file ../.env rm -f ngrok
+	@sed -i.bak 's/grafana-master:3000/grafana-replica:3000/' docker-compose.yml
+	@docker-compose --env-file ../.env up -d ngrok
 	@echo "Ngrok now points to replica"
-	@echo "New URL:"
+	@echo "URL:"
 	@sleep 2
 	@make ngrok-url
 
 clean:
-	docker-compose down -v
+	docker-compose --env-file ../.env down -v
 	rm -f docker-compose.yml.bak
 	@echo "All containers and volumes removed"

@@ -8,7 +8,7 @@ help: ## Show this help message
 
 start: ## Start all services (dev + prod)
 	@echo "Starting scenario-2-dev-prod..."
-	docker-compose up -d
+	docker-compose --env-file ../.env up -d
 	@echo "Waiting for services to be ready..."
 	@sleep 5
 	@echo ""
@@ -33,32 +33,32 @@ start: ## Start all services (dev + prod)
 	@echo "  make promote    - Promote dev dashboard to prod"
 
 stop: ## Stop all services
-	docker-compose down
+	docker-compose --env-file ../.env down
 
 restart: ## Restart all services
-	docker-compose restart
+	docker-compose --env-file ../.env restart
 
 restart-dev: ## Restart dev only
-	docker-compose restart grafana-dev
+	docker-compose --env-file ../.env restart grafana-dev
 
 restart-prod: ## Restart prod only
-	docker-compose restart grafana-prod
+	docker-compose --env-file ../.env restart grafana-prod
 
 logs: ## Show logs (all services)
-	docker-compose logs -f
+	docker-compose --env-file ../.env logs -f
 
 logs-dev: ## Show dev Grafana logs
-	docker-compose logs -f grafana-dev
+	docker-compose --env-file ../.env logs -f grafana-dev
 
 logs-prod: ## Show prod Grafana logs
-	docker-compose logs -f grafana-prod
+	docker-compose --env-file ../.env logs -f grafana-prod
 
 logs-ngrok: ## Show ngrok logs
-	docker-compose logs ngrok
+	docker-compose --env-file ../.env logs ngrok
 
 ngrok-url: ## Get ngrok public URL (points to prod)
 	@echo "Ngrok public URL (Prod):"
-	@docker-compose logs ngrok 2>/dev/null | grep -o 'url=https://[^"]*' | sed 's/url=//' | tail -1 || echo "Ngrok not ready yet, try again in a few seconds"
+	@docker-compose --env-file ../.env logs ngrok 2>/dev/null | grep -o 'url=https://[^"]*' | sed 's/url=//' | tail -1 || echo "Ngrok not ready yet, try again in a few seconds"
 
 open-dev: ## Open Dev Grafana in browser
 	@echo "Opening Dev Grafana..."
@@ -99,11 +99,11 @@ health: ## Check health of services
 	@curl -s http://localhost:3001/api/health | grep -q "ok" && echo "  ✓ Healthy" || echo "  ✗ Not responding"
 	@echo ""
 	@echo "Ngrok tunnel:"
-	@docker-compose logs ngrok 2>/dev/null | grep -q "started tunnel" && echo "  ✓ Active" || echo "  ✗ Not active"
+	@docker-compose --env-file ../.env logs ngrok 2>/dev/null | grep -q "started tunnel" && echo "  ✓ Active" || echo "  ✗ Not active"
 
 clean: ## Stop and remove all containers, volumes, and networks
-	docker-compose down -v
+	docker-compose --env-file ../.env down -v
 	@echo "All resources cleaned up"
 
 status: ## Show status of all services
-	docker-compose ps
+	docker-compose --env-file ../.env ps

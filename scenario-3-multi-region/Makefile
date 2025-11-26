@@ -18,7 +18,7 @@ help:
 	@echo "  make clean       - Stop and remove all containers and volumes"
 
 start:
-	docker-compose up -d
+	docker-compose --env-file ../.env up -d
 	@echo "Waiting for services to be healthy..."
 	@sleep 5
 	@echo ""
@@ -31,25 +31,25 @@ start:
 	@echo "Get public URL: make ngrok-url"
 
 stop:
-	docker-compose down
+	docker-compose --env-file ../.env down
 
 restart: stop start
 
 logs:
-	docker-compose logs -f
+	docker-compose --env-file ../.env logs -f
 
 logs-us:
-	docker-compose logs -f grafana-us
+	docker-compose --env-file ../.env logs -f grafana-us
 
 logs-eu:
-	docker-compose logs -f grafana-eu
+	docker-compose --env-file ../.env logs -f grafana-eu
 
 status:
-	docker-compose ps
+	docker-compose --env-file ../.env ps
 
 health:
 	@echo "Checking service health..."
-	@docker-compose ps
+	@docker-compose --env-file ../.env ps
 	@echo ""
 	@echo "US Region Health:"
 	@curl -s http://localhost:3000/api/health | grep -q "ok" && echo "✓ US Region is healthy" || echo "✗ US Region is not responding"
@@ -107,5 +107,5 @@ ngrok-url:
 	@curl -s http://localhost:4040/api/tunnels | grep -o '"public_url":"[^"]*"' | grep -o 'https://[^"]*' || echo "Ngrok not running or URL not available"
 
 clean:
-	docker-compose down -v
+	docker-compose --env-file ../.env down -v
 	@echo "All containers and volumes removed"

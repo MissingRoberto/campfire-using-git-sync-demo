@@ -1,14 +1,11 @@
-env_file:
-  - ../.env
-
 services:
   # Ngrok - single tunnel (free tier limitation)
   # Points to prod for Git Sync webhook support
   ngrok:
     image: ngrok/ngrok:latest
-    command: http grafana-prod:3000
+    command: http --url=${NGROK_SUBDOMAIN} grafana-prod:3000
     environment:
-      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
     networks:
       - grafana-net
     restart: unless-stopped
@@ -53,6 +50,7 @@ services:
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
       - GF_RENDERING_SERVER_URL=http://renderer-prod:8081/render
       - GF_RENDERING_CALLBACK_URL=http://grafana-prod:3000/
+      - GF_SERVER_ROOT_URL=${NGROK_SUBDOMAIN}
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SECURITY_ADMIN_USER=admin
       - GF_AUTH_ANONYMOUS_ENABLED=false
