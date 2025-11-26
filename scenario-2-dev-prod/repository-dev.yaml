@@ -19,4 +19,4 @@ spec:
     - branch
 secure:
   token:
-    value: ${GITHUB_PAT}
+    create: ${GITHUB_PAT}
