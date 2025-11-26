@@ -1,0 +1,23 @@
+contexts:
+  master:
+    grafana:
+      server: http://localhost:3000
+      user: admin
+      password: admin
+      org-id: 1
+
+  replica:
+    grafana:
+      server: http://localhost:3001
+      user: admin
+      password: admin
+      org-id: 1
+
+  load-balancer:
+    grafana:
+      server: http://localhost:8080
+      user: admin
+      password: admin
+      org-id: 1
+
+current-context: master

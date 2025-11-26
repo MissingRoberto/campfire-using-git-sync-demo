@@ -35,6 +35,7 @@ High availability setup with master-replica instances and easy failover.
 - Docker & Docker Compose
 - Ngrok account ([ngrok.com](https://ngrok.com))
 - GitHub account with Personal Access Token
+- grafanactl CLI (optional, for command-line management)
 
 ## Quick Start
 
@@ -118,6 +119,47 @@ make clean         # Remove all containers and volumes
   }
 }
 ```
+
+## Using grafanactl
+
+Each scenario includes a `grafanactl.yaml` configuration file for CLI management. To use grafanactl:
+
+### Installation
+
+```bash
+# Install grafanactl (see https://grafana.github.io/grafanactl/)
+brew install grafanactl  # macOS
+# or download from releases page
+```
+
+### Usage
+
+```bash
+# Set config file location
+export GRAFANACTL_CONFIG=/path/to/scenario/grafanactl.yaml
+
+# List available contexts
+grafanactl config get-contexts
+
+# Switch context (scenario 2, 3, 4 only)
+grafanactl config use-context prod
+
+# List dashboards
+grafanactl get dashboards
+
+# Get specific dashboard
+grafanactl get dashboard <uid>
+
+# Push dashboard to Grafana
+grafanactl push dashboard <file.json>
+```
+
+### Context Names by Scenario
+
+- **Scenario 1**: `default`
+- **Scenario 2**: `dev`, `prod`
+- **Scenario 3**: `us`, `eu`
+- **Scenario 4**: `master`, `replica`, `load-balancer`
 
 ## Troubleshooting
 

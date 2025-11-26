@@ -1,0 +1,16 @@
+contexts:
+  us:
+    grafana:
+      server: http://localhost:3000
+      user: admin
+      password: admin
+      org-id: 1
+
+  eu:
+    grafana:
+      server: http://localhost:3001
+      user: admin
+      password: admin
+      org-id: 1
+
+current-context: us
