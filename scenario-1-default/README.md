@@ -2,6 +2,20 @@
 
 Single Grafana instance with Git Sync.
 
+## Architecture
+
+```mermaid
+graph LR
+    User[User] --> Ngrok[Ngrok Tunnel]
+    Ngrok --> Grafana[Grafana Instance]
+    Grafana <--> |Git Sync| GitHub[GitHub Repository]
+    Grafana --> Renderer[Image Renderer]
+
+    style Grafana fill:#f96332
+    style GitHub fill:#333
+    style Ngrok fill:#1f8fff
+```
+
 ## What's Included
 
 - Single Grafana instance with ngrok tunnel

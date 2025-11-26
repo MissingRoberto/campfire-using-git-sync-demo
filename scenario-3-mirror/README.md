@@ -2,6 +2,25 @@
 
 Two Grafana instances syncing from the same Git directory for disaster recovery and high availability.
 
+## Architecture
+
+```mermaid
+graph TB
+    User[User] --> Ngrok[Ngrok Tunnel]
+    Ngrok --> |Failover Switch| Primary[Primary Grafana<br/>localhost:3000]
+    Ngrok -.-> |Can switch to| Mirror[Mirror Grafana<br/>localhost:3001]
+
+    Primary <--> |Git Sync<br/>grafana/<br/>Bidirectional| GitHub[GitHub Repository]
+    Mirror <--> |Git Sync<br/>grafana/<br/>Read-Only| GitHub
+
+    Primary -.-> |Automatic Sync| Mirror
+
+    style Primary fill:#f96332
+    style Mirror fill:#ffa500
+    style GitHub fill:#333
+    style Ngrok fill:#1f8fff
+```
+
 ## What's Included
 
 - Two instances: Primary and Mirror
