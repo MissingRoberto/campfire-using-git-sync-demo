@@ -1,9 +1,9 @@
 services:
   # Ngrok - single tunnel (free tier limitation)
-  # Points to dev by default, change to grafana-prod:3001 for prod
+  # Points to prod for Git Sync webhook support
   ngrok:
     image: ngrok/ngrok:latest
-    command: http grafana-dev:3000
+    command: http grafana-prod:3000
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
     networks:

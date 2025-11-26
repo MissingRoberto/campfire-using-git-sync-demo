@@ -1,13 +1,14 @@
 # Scenario 2: Dev/Prod Setup
 
-Separate development and production Grafana instances with independent Git Sync paths.
+Demonstrate promoting a dashboard from development to production using Git Sync.
 
 ## Overview
 
 - Two instances: Dev and Prod
-- Single ngrok tunnel (free tier limitation)
-- Independent Git paths
-- Promote changes from dev to prod
+- Dev has 1 dashboard for promotion demo
+- Prod has monitoring dashboards + receives promoted dashboard
+- Ngrok tunnel points to Prod (for Git Sync webhooks)
+- Promote changes from dev to prod via Git
 
 ## Quick Start
 
@@ -18,108 +19,131 @@ cp .env.example .env
 # Edit with your ngrok token
 ```
 
-**Note**: Free ngrok allows only 1 tunnel. Both instances run, but ngrok exposes only one (dev by default).
-
 ### 2. Start Services
 
 ```bash
-docker-compose up -d
+make start
+# Or: docker-compose up -d
 ```
 
 ### 3. Access Instances
 
-**Dev**: http://localhost:3000 or ngrok URL
-**Prod**: http://localhost:3001 (local only)
+**Dev**: http://localhost:3000 (local only)
+**Prod**: http://localhost:3001 or ngrok URL
 
 Login: `admin` / `admin`
 
 ### 4. Get Ngrok URL
 
 ```bash
-docker-compose logs ngrok | grep "started tunnel"
+make ngrok-url
+# Or: docker-compose logs ngrok | grep "started tunnel"
 ```
 
 ## Configure Git Sync
 
-### Dev Instance
+### Dev Instance (http://localhost:3000)
 
 1. Go to **Administration** → **Provisioning**
 2. Click **"Configure Git Sync"**
 3. Enter:
    - **Repository**: `https://github.com/MissingRoberto/campfire-using-git-sync-demo`
-   - **Branch**: `main` or `dev`
+   - **Branch**: `main`
    - **Path**: `scenario-2-dev-prod/dev/`
    - **PAT**: Your GitHub token
+4. **Sync Mode**: Bidirectional
 
-### Prod Instance
+### Prod Instance (http://localhost:3001 or ngrok URL)
 
 1. Same steps as dev
 2. Use **Path**: `scenario-2-dev-prod/prod/`
+3. **Sync Mode**: Bidirectional
 
-## Workflow: Dev to Prod
+## Workflow: Promote Dashboard from Dev to Prod
 
-### 1. Develop in Dev
+### Option A: Using Makefile
 
-1. Make changes in Dev Grafana (port 3000)
-2. Save and create PR
-3. Review and merge
-
-### 2. Test in Dev
-
-1. Verify changes work
-2. Test with team
-3. Check for issues
-
-### 3. Promote to Prod
-
-**Copy dashboards:**
 ```bash
-cp scenario-2-dev-prod/dev/monitoring/dashboard.json \
-   scenario-2-dev-prod/prod/monitoring/dashboard.json
-git add .
+# 1. Edit dashboard in Dev Grafana (http://localhost:3000)
+# 2. Save changes in Dev
+
+# 3. Promote to prod
+make promote
+
+# 4. Commit and push
+git add prod/new-dashboard.json
 git commit -m "Promote dashboard to prod"
 git push
+
+# 5. Verify in Prod
+make open-prod
 ```
 
-### 4. Verify in Prod
+### Option B: Manual
 
-1. Check dashboard appears in Prod (port 3001)
-2. Test functionality
+```bash
+# 1. Edit dashboard in Dev Grafana
+# 2. Save changes
 
-## Switching Ngrok Tunnel
+# 3. Copy dashboard file
+cp dev/new-dashboard.json prod/new-dashboard.json
 
-To expose prod instead of dev, edit docker-compose.yml:
+# 4. Commit and push
+git add prod/new-dashboard.json
+git commit -m "Promote dashboard to prod"
+git push
 
-```yaml
-ngrok:
-  command: http grafana-prod:3000  # Change from grafana-dev:3000
+# 5. Wait for Git Sync (60s) or force sync in Prod UI
 ```
 
-Then restart: `docker-compose restart ngrok`
+## Makefile Commands
+
+```bash
+make help          # Show all available commands
+make start         # Start all services
+make open-dev      # Open Dev Grafana
+make open-prod     # Open Prod Grafana
+make open-all      # Open both + ngrok dashboard
+make promote       # Promote dev dashboard to prod
+make logs-dev      # View dev logs
+make logs-prod     # View prod logs
+make health        # Check service health
+make stop          # Stop all services
+```
 
 ## Common Commands
 
 ```bash
-# Start both
-docker-compose up -d
+# Start
+make start
 
-# Logs
-docker-compose logs -f grafana-dev
-docker-compose logs -f grafana-prod
+# Open dashboards
+make open-all
+
+# View logs
+make logs-dev
+make logs-prod
+
+# Promote dashboard
+make promote
 
 # Stop
-docker-compose down
+make stop
 ```
 
 ## Troubleshooting
 
-### Ngrok Only Exposes One Instance
+### Ngrok Only Exposes Prod
 
-This is expected with free tier. Access the other instance via localhost:3001.
+This is intentional. Dev is for local editing only. Prod needs public URL for Git Sync webhooks.
 
-### Dashboards Out of Sync
+### Dashboard Not Appearing in Prod
 
-1. Check Git Sync status in each instance
-2. Verify correct repository paths
-3. Wait for sync interval (60s)
-4. Force sync via UI
+1. Check Git Sync status in Prod UI
+2. Verify file was committed and pushed
+3. Wait 60s for sync interval
+4. Force sync via UI: Administration → Provisioning → Pull
+
+### Promote Command Not Working
+
+Ensure you're in the scenario-2-dev-prod directory and `dev/new-dashboard.json` exists.

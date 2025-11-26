@@ -2,7 +2,7 @@
   "apiVersion": "dashboard.grafana.app/v1beta1",
   "kind": "Dashboard",
   "metadata": {
-    "name": "database-metrics"
+    "name": "new-dashboard"
   },
   "spec": {
     "annotations": {
@@ -54,7 +54,7 @@
               }
             },
             "mappings": [],
-            "max": 1000,
+            "max": 100,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
@@ -64,16 +64,12 @@
                   "value": null
                 },
                 {
-                  "color": "yellow",
-                  "value": 500
-                },
-                {
                   "color": "red",
-                  "value": 800
+                  "value": 80
                 }
               ]
             },
-            "unit": "ms"
+            "unit": "percent"
           },
           "overrides": []
         },
@@ -86,7 +82,7 @@
         "id": 1,
         "options": {
           "legend": {
-            "calcs": ["mean", "max", "min"],
+            "calcs": ["mean", "max", "last"],
             "displayMode": "table",
             "placement": "bottom",
             "showLegend": true
@@ -104,12 +100,12 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 10,
-            "max": 1000,
-            "alias": "Query Duration"
+            "min": 0,
+            "max": 100,
+            "alias": "CPU Usage"
           }
         ],
-        "title": "Query Duration",
+        "title": "CPU Usage",
         "type": "timeseries"
       },
       {
@@ -153,7 +149,7 @@
               }
             },
             "mappings": [],
-            "max": 500,
+            "max": 100,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
@@ -163,16 +159,12 @@
                   "value": null
                 },
                 {
-                  "color": "yellow",
-                  "value": 300
-                },
-                {
                   "color": "red",
-                  "value": 450
+                  "value": 80
                 }
               ]
             },
-            "unit": "short"
+            "unit": "percent"
           },
           "overrides": []
         },
@@ -185,7 +177,7 @@
         "id": 2,
         "options": {
           "legend": {
-            "calcs": ["mean", "max", "last"],
+            "calcs": ["mean", "max"],
             "displayMode": "table",
             "placement": "bottom",
             "showLegend": true
@@ -203,23 +195,12 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 10,
-            "max": 200,
-            "alias": "Active Connections"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 200,
-            "max": 500,
-            "alias": "Max Connections"
+            "min": 0,
+            "max": 100,
+            "alias": "Memory Usage"
           }
         ],
-        "title": "Database Connections",
+        "title": "Memory Usage",
         "type": "timeseries"
       },
       {
@@ -230,40 +211,10 @@
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 20,
-              "gradientMode": "opacity",
-              "hideFrom": {
-                "tooltip": false,
-                "viz": false,
-                "legend": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 2,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
+              "mode": "thresholds"
             },
             "mappings": [],
-            "max": 5000,
+            "max": 100,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
@@ -271,31 +222,37 @@
                 {
                   "color": "green",
                   "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 90
                 }
               ]
             },
-            "unit": "tps"
+            "unit": "percent"
           },
           "overrides": []
         },
         "gridPos": {
           "h": 8,
-          "w": 12,
+          "w": 8,
           "x": 0,
           "y": 8
         },
         "id": 3,
         "options": {
-          "legend": {
-            "calcs": ["mean", "max"],
-            "displayMode": "table",
-            "placement": "bottom",
-            "showLegend": true
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
           },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "desc"
-          }
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
         },
         "targets": [
           {
@@ -305,131 +262,12 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 500,
-            "max": 3000,
-            "alias": "Commits"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 50,
-            "max": 500,
-            "alias": "Rollbacks"
+            "min": 0,
+            "max": 100
           }
         ],
-        "title": "Transaction Rate",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "testdata",
-          "uid": "-- Grafana --"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "custom": {
-              "align": "auto",
-              "cellOptions": {
-                "type": "auto"
-              },
-              "inspect": false
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "yellow",
-                  "value": 1000
-                },
-                {
-                  "color": "red",
-                  "value": 2000
-                }
-              ]
-            },
-            "unit": "ms"
-          },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "Query"
-              },
-              "properties": [
-                {
-                  "id": "custom.width",
-                  "value": 400
-                }
-              ]
-            }
-          ]
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 8
-        },
-        "id": 4,
-        "options": {
-          "cellHeight": "sm",
-          "footer": {
-            "countRows": false,
-            "fields": "",
-            "reducer": ["sum"],
-            "show": false
-          },
-          "showHeader": true
-        },
-        "targets": [
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 1000,
-            "max": 5000,
-            "alias": "SELECT * FROM users WHERE status = 'active'"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 2000,
-            "max": 8000,
-            "alias": "SELECT orders.* FROM orders JOIN items"
-          },
-          {
-            "datasource": {
-              "type": "testdata",
-              "uid": "-- Grafana --"
-            },
-            "refId": "C",
-            "scenarioId": "random_walk",
-            "min": 1500,
-            "max": 6000,
-            "alias": "UPDATE products SET stock = stock - 1"
-          }
-        ],
-        "title": "Slow Queries",
-        "type": "table"
+        "title": "Disk Usage",
+        "type": "gauge"
       },
       {
         "datasource": {
@@ -448,14 +286,6 @@
                 {
                   "color": "green",
                   "value": null
-                },
-                {
-                  "color": "yellow",
-                  "value": 50
-                },
-                {
-                  "color": "red",
-                  "value": 100
                 }
               ]
             },
@@ -466,10 +296,10 @@
         "gridPos": {
           "h": 8,
           "w": 8,
-          "x": 0,
-          "y": 16
+          "x": 8,
+          "y": 8
         },
-        "id": 5,
+        "id": 4,
         "options": {
           "colorMode": "value",
           "graphMode": "area",
@@ -490,11 +320,11 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 10,
-            "max": 150
+            "min": 0,
+            "max": 1000
           }
         ],
-        "title": "Active Connections",
+        "title": "Active Processes",
         "type": "stat"
       },
       {
@@ -507,9 +337,23 @@
             "color": {
               "mode": "thresholds"
             },
-            "mappings": [],
-            "max": 100,
-            "min": 0,
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "red",
+                    "index": 0,
+                    "text": "DOWN"
+                  },
+                  "1": {
+                    "color": "green",
+                    "index": 1,
+                    "text": "UP"
+                  }
+                },
+                "type": "value"
+              }
+            ],
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -518,35 +362,32 @@
                   "value": null
                 },
                 {
-                  "color": "yellow",
-                  "value": 20
-                },
-                {
                   "color": "green",
-                  "value": 50
+                  "value": 1
                 }
               ]
-            },
-            "unit": "percent"
+            }
           },
           "overrides": []
         },
         "gridPos": {
           "h": 8,
           "w": 8,
-          "x": 8,
-          "y": 16
+          "x": 16,
+          "y": 8
         },
-        "id": 6,
+        "id": 5,
         "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "justifyMode": "auto",
           "orientation": "auto",
           "reduceOptions": {
             "values": false,
             "calcs": ["lastNotNull"],
             "fields": ""
           },
-          "showThresholdLabels": false,
-          "showThresholdMarkers": true
+          "textMode": "value"
         },
         "targets": [
           {
@@ -556,17 +397,17 @@
             },
             "refId": "A",
             "scenarioId": "random_walk",
-            "min": 60,
-            "max": 95
+            "min": 0,
+            "max": 1
           }
         ],
-        "title": "Cache Hit Rate",
-        "type": "gauge"
+        "title": "System Status",
+        "type": "stat"
       }
     ],
     "schemaVersion": 38,
     "style": "dark",
-    "tags": ["applications", "database", "metrics"],
+    "tags": ["monitoring", "system", "overview"],
     "templating": {
       "list": []
     },
@@ -576,8 +417,8 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "Database Metrics",
-    "uid": "database-metrics",
+    "title": "New Dashboard (Dev)",
+    "uid": "new-dashboard",
     "version": 1,
     "weekStart": ""
   }
