@@ -6,7 +6,20 @@
   },
   "spec": {
     "annotations": {
-      "list": []
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations \u0026 Alerts",
+          "type": "dashboard"
+        }
+      ]
     },
     "editable": true,
     "fiscalYearStartMonth": 0,
@@ -31,7 +44,7 @@
               "steps": [
                 {
                   "color": "red",
-                  "value": null
+                  "value": 0
                 },
                 {
                   "color": "yellow",
@@ -55,25 +68,31 @@
         },
         "id": 1,
         "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
           "orientation": "auto",
           "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
           "showThresholdLabels": false,
-          "showThresholdMarkers": true
+          "showThresholdMarkers": true,
+          "sizing": "auto"
         },
+        "pluginVersion": "12.4.0-19691013295",
         "targets": [
           {
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "A",
-            "scenarioId": "random_walk",
+            "max": 105,
             "min": 75,
-            "max": 105
+            "refId": "A",
+            "scenarioId": "random_walk"
           }
         ],
         "title": "Revenue Target Achievement",
@@ -97,7 +116,7 @@
               "steps": [
                 {
                   "color": "red",
-                  "value": null
+                  "value": 0
                 },
                 {
                   "color": "yellow",
@@ -115,31 +134,37 @@
         },
         "gridPos": {
           "h": 8,
-          "w": 6,
+          "w": 3,
           "x": 6,
           "y": 0
         },
         "id": 2,
         "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
           "orientation": "auto",
           "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
           "showThresholdLabels": false,
-          "showThresholdMarkers": true
+          "showThresholdMarkers": true,
+          "sizing": "auto"
         },
+        "pluginVersion": "12.4.0-19691013295",
         "targets": [
           {
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "A",
-            "scenarioId": "random_walk",
+            "max": 110,
             "min": 80,
-            "max": 110
+            "refId": "A",
+            "scenarioId": "random_walk"
           }
         ],
         "title": "Customer Acquisition Target",
@@ -161,7 +186,7 @@
               "steps": [
                 {
                   "color": "green",
-                  "value": null
+                  "value": 0
                 }
               ]
             },
@@ -181,24 +206,30 @@
           "graphMode": "area",
           "justifyMode": "auto",
           "orientation": "auto",
+          "percentChangeColorMode": "standard",
           "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
-          "textMode": "auto"
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
         },
+        "pluginVersion": "12.4.0-19691013295",
         "targets": [
           {
+            "alias": "MRR",
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 2500000,
             "max": 4500000,
-            "alias": "MRR"
+            "min": 2500000,
+            "refId": "A",
+            "scenarioId": "random_walk"
           }
         ],
         "title": "Monthly Recurring Revenue (MRR)",
@@ -215,12 +246,14 @@
               "mode": "thresholds"
             },
             "mappings": [],
+            "max": 100,
+            "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
                   "color": "red",
-                  "value": null
+                  "value": 0
                 },
                 {
                   "color": "yellow",
@@ -248,24 +281,30 @@
           "graphMode": "area",
           "justifyMode": "auto",
           "orientation": "auto",
+          "percentChangeColorMode": "standard",
           "reduceOptions": {
-            "values": false,
-            "calcs": ["lastNotNull"],
-            "fields": ""
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
-          "textMode": "auto"
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
         },
+        "pluginVersion": "12.4.0-19691013295",
         "targets": [
           {
+            "alias": "CSAT",
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 82,
             "max": 96,
-            "alias": "CSAT"
+            "min": 82,
+            "refId": "A",
+            "scenarioId": "random_walk"
           }
         ],
         "title": "Customer Satisfaction Score",
@@ -282,19 +321,22 @@
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "",
               "axisPlacement": "auto",
               "barAlignment": 0,
+              "barWidthFactor": 0.6,
               "drawStyle": "line",
               "fillOpacity": 20,
               "gradientMode": "opacity",
               "hideFrom": {
+                "legend": false,
                 "tooltip": false,
-                "viz": false,
-                "legend": false
+                "viz": false
               },
+              "insertNulls": false,
               "lineInterpolation": "smooth",
               "lineWidth": 2,
               "pointSize": 5,
@@ -302,6 +344,7 @@
                 "type": "linear"
               },
               "showPoints": "never",
+              "showValues": false,
               "spanNulls": false,
               "stacking": {
                 "group": "A",
@@ -317,7 +360,7 @@
               "steps": [
                 {
                   "color": "green",
-                  "value": null
+                  "value": 0
                 },
                 {
                   "color": "red",
@@ -337,14 +380,17 @@
                 {
                   "id": "color",
                   "value": {
-                    "mode": "fixed",
-                    "fixedColor": "red"
+                    "fixedColor": "red",
+                    "mode": "fixed"
                   }
                 },
                 {
                   "id": "custom.lineStyle",
                   "value": {
-                    "dash": [10, 10],
+                    "dash": [
+                      10,
+                      10
+                    ],
                     "fill": "dash"
                   }
                 }
@@ -361,38 +407,43 @@
         "id": 5,
         "options": {
           "legend": {
-            "calcs": ["mean", "lastNotNull"],
+            "calcs": [
+              "mean",
+              "lastNotNull"
+            ],
             "displayMode": "table",
             "placement": "bottom",
             "showLegend": true
           },
           "tooltip": {
+            "hideZeros": false,
             "mode": "multi",
             "sort": "desc"
           }
         },
+        "pluginVersion": "12.4.0-19691013295",
         "targets": [
           {
+            "alias": "Actual Performance",
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 75,
             "max": 105,
-            "alias": "Actual Performance"
+            "min": 75,
+            "refId": "A",
+            "scenarioId": "random_walk"
           },
           {
+            "alias": "Target",
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 98,
             "max": 102,
-            "alias": "Target"
+            "min": 98,
+            "refId": "B",
+            "scenarioId": "random_walk"
           }
         ],
         "title": "Target vs Actual Performance",
@@ -409,19 +460,22 @@
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "",
               "axisPlacement": "auto",
               "barAlignment": 0,
+              "barWidthFactor": 0.6,
               "drawStyle": "line",
               "fillOpacity": 20,
               "gradientMode": "opacity",
               "hideFrom": {
+                "legend": false,
                 "tooltip": false,
-                "viz": false,
-                "legend": false
+                "viz": false
               },
+              "insertNulls": false,
               "lineInterpolation": "smooth",
               "lineWidth": 2,
               "pointSize": 5,
@@ -429,6 +483,7 @@
                 "type": "linear"
               },
               "showPoints": "never",
+              "showValues": false,
               "spanNulls": false,
               "stacking": {
                 "group": "A",
@@ -444,7 +499,7 @@
               "steps": [
                 {
                   "color": "green",
-                  "value": null
+                  "value": 0
                 }
               ]
             },
@@ -461,58 +516,70 @@
         "id": 6,
         "options": {
           "legend": {
-            "calcs": ["mean", "max", "lastNotNull"],
+            "calcs": [
+              "mean",
+              "max",
+              "lastNotNull"
+            ],
             "displayMode": "table",
             "placement": "bottom",
             "showLegend": true
           },
           "tooltip": {
+            "hideZeros": false,
             "mode": "multi",
             "sort": "desc"
           }
         },
+        "pluginVersion": "12.4.0-19691013295",
         "targets": [
           {
+            "alias": "Revenue",
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "A",
-            "scenarioId": "random_walk",
-            "min": 2500000,
             "max": 4500000,
-            "alias": "Revenue"
+            "min": 2500000,
+            "refId": "A",
+            "scenarioId": "random_walk"
           },
           {
+            "alias": "Operating Costs",
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "B",
-            "scenarioId": "random_walk",
-            "min": 800000,
             "max": 1800000,
-            "alias": "Operating Costs"
+            "min": 800000,
+            "refId": "B",
+            "scenarioId": "random_walk"
           },
           {
+            "alias": "Profit",
             "datasource": {
               "type": "testdata",
               "uid": "-- Grafana --"
             },
-            "refId": "C",
-            "scenarioId": "random_walk",
-            "min": 1200000,
             "max": 3000000,
-            "alias": "Profit"
+            "min": 1200000,
+            "refId": "C",
+            "scenarioId": "random_walk"
           }
         ],
         "title": "Financial Trend Analysis",
         "type": "timeseries"
       }
     ],
-    "schemaVersion": 38,
-    "style": "dark",
-    "tags": ["business", "kpi", "overview", "metrics"],
+    "preload": false,
+    "refresh": "",
+    "schemaVersion": 42,
+    "tags": [
+      "business",
+      "kpi",
+      "overview",
+      "metrics"
+    ],
     "templating": {
       "list": []
     },
@@ -522,9 +589,6 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "KPI Overview",
-    "uid": "kpi-overview",
-    "version": 1,
-    "weekStart": ""
+    "title": "KPI Overview"
   }
 }
