@@ -22,7 +22,6 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=false
     volumes:
       - grafana-dev-data:/var/lib/grafana
-      - ./dev/grafana:/var/lib/grafana/dashboards/git-sync:ro
     ports:
       - "3000:3000"
     depends_on:
@@ -66,7 +65,6 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=false
     volumes:
       - grafana-prod-data:/var/lib/grafana
-      - ./prod/grafana:/var/lib/grafana/dashboards/git-sync:ro
     ports:
       - "3001:3000"
     depends_on:

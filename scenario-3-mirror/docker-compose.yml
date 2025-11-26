@@ -1,39 +1,39 @@
 services:
-  ngrok:
+  # Primary Instance
+  ngrok-primary:
     image: ngrok/ngrok:latest
-    command: http --url=${NGROK_SUBDOMAIN} grafana:3000
+    command: http --url=${NGROK_SUBDOMAIN_PRIMARY} grafana-primary:3000
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
     networks:
       - grafana-net
     restart: unless-stopped
 
-  grafana:
+  grafana-primary:
     image: grafana/grafana:main
-    container_name: grafana-mirror
+    container_name: grafana-primary
     environment:
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
-      - GF_RENDERING_SERVER_URL=http://renderer:8081/render
-      - GF_RENDERING_CALLBACK_URL=http://grafana:3000/
-      - GF_SERVER_ROOT_URL=https://${NGROK_SUBDOMAIN}
+      - GF_RENDERING_SERVER_URL=http://renderer-primary:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana-primary:3000/
+      - GF_SERVER_ROOT_URL=https://${NGROK_SUBDOMAIN_PRIMARY}
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SECURITY_ADMIN_USER=admin
       - GF_AUTH_ANONYMOUS_ENABLED=false
     volumes:
-      - grafana-data:/var/lib/grafana
-      - ./grafana:/var/lib/grafana/dashboards/git-sync:ro
+      - grafana-primary-data:/var/lib/grafana
     ports:
       - "3000:3000"
     depends_on:
-      - renderer
-      - ngrok
+      - renderer-primary
+      - ngrok-primary
     networks:
       - grafana-net
     restart: unless-stopped
 
-  renderer:
+  renderer-primary:
     image: grafana/grafana-image-renderer:latest
-    container_name: grafana-renderer-mirror
+    container_name: grafana-renderer-primary
     ports:
       - "8081:8081"
     environment:
@@ -42,8 +42,52 @@ services:
       - grafana-net
     restart: unless-stopped
 
+  # Mirror Instance
+  ngrok-mirror:
+    image: ngrok/ngrok:latest
+    command: http --url=${NGROK_SUBDOMAIN_MIRROR} grafana-mirror:3000
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  grafana-mirror:
+    image: grafana/grafana:main
+    container_name: grafana-mirror
+    environment:
+      - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
+      - GF_RENDERING_SERVER_URL=http://renderer-mirror:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana-mirror:3000/
+      - GF_SERVER_ROOT_URL=https://${NGROK_SUBDOMAIN_MIRROR}
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana-mirror-data:/var/lib/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - renderer-mirror
+      - ngrok-mirror
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
+  renderer-mirror:
+    image: grafana/grafana-image-renderer:latest
+    container_name: grafana-renderer-mirror
+    ports:
+      - "8082:8081"
+    environment:
+      - ENABLE_METRICS=true
+    networks:
+      - grafana-net
+    restart: unless-stopped
+
 volumes:
-  grafana-data:
+  grafana-primary-data:
+  grafana-mirror-data:
 
 networks:
   grafana-net:
