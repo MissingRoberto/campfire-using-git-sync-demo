@@ -8,7 +8,7 @@ spec:
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: 3-multi-region/shared
+    path: 3-multi-region/shared/
     generateDashboardPreviews: true
   sync:
     enabled: true
