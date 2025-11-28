@@ -1,0 +1,530 @@
+{
+  "apiVersion": "dashboard.grafana.app/v1beta1",
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "kpi-overview"
+  },
+  "spec": {
+    "annotations": {
+      "list": []
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 80
+                },
+                {
+                  "color": "green",
+                  "value": 95
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 75,
+            "max": 105
+          }
+        ],
+        "title": "Revenue Target Achievement",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 85
+                },
+                {
+                  "color": "green",
+                  "value": 95
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 0
+        },
+        "id": 2,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 80,
+            "max": 110
+          }
+        ],
+        "title": "Customer Acquisition Target",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "currencyUSD"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 12,
+          "y": 0
+        },
+        "id": 3,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "textMode": "auto"
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 2500000,
+            "max": 4500000,
+            "alias": "MRR"
+          }
+        ],
+        "title": "Monthly Recurring Revenue (MRR)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 85
+                },
+                {
+                  "color": "green",
+                  "value": 92
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 0
+        },
+        "id": 4,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "textMode": "auto"
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 82,
+            "max": 96,
+            "alias": "CSAT"
+          }
+        ],
+        "title": "Customer Satisfaction Score",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "line"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 100
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Target"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "fixed",
+                    "fixedColor": "red"
+                  }
+                },
+                {
+                  "id": "custom.lineStyle",
+                  "value": {
+                    "dash": [10, 10],
+                    "fill": "dash"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "id": 5,
+        "options": {
+          "legend": {
+            "calcs": ["mean", "lastNotNull"],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 75,
+            "max": 105,
+            "alias": "Actual Performance"
+          },
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "B",
+            "scenarioId": "random_walk",
+            "min": 98,
+            "max": 102,
+            "alias": "Target"
+          }
+        ],
+        "title": "Target vs Actual Performance",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "testdata",
+          "uid": "-- Grafana --"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 20,
+              "gradientMode": "opacity",
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "currencyUSD"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 6,
+        "options": {
+          "legend": {
+            "calcs": ["mean", "max", "lastNotNull"],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "A",
+            "scenarioId": "random_walk",
+            "min": 2500000,
+            "max": 4500000,
+            "alias": "Revenue"
+          },
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "B",
+            "scenarioId": "random_walk",
+            "min": 800000,
+            "max": 1800000,
+            "alias": "Operating Costs"
+          },
+          {
+            "datasource": {
+              "type": "testdata",
+              "uid": "-- Grafana --"
+            },
+            "refId": "C",
+            "scenarioId": "random_walk",
+            "min": 1200000,
+            "max": 3000000,
+            "alias": "Profit"
+          }
+        ],
+        "title": "Financial Trend Analysis",
+        "type": "timeseries"
+      }
+    ],
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": ["business", "kpi", "overview", "metrics"],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-90d",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "KPI Overview",
+    "uid": "kpi-overview",
+    "version": 1,
+    "weekStart": ""
+  }
+}
