@@ -4,32 +4,49 @@ This scenario demonstrates how multiple teams can manage their own dashboards wi
 
 ## Architecture
 
+```mermaid
+graph TB
+    User[User] --> Grafana[Single Grafana Instance]
+
+    subgraph GitHub[GitHub Repository]
+        PlatformPath[team-platform/grafana/]
+        DataPath[team-data/grafana/]
+    end
+
+    subgraph Grafana[Grafana Instance :3000]
+        PlatformFolder[Platform Team Folder]
+        DataFolder[Data Team Folder]
+    end
+
+    PlatformPath <--> |Git Sync Repo 1| PlatformFolder
+    DataPath <--> |Git Sync Repo 2| DataFolder
+
+    Grafana --> |Ngrok| Internet[Public Internet]
+
+    style Grafana fill:#f96332
+    style GitHub fill:#333
+    style Internet fill:#4285f4
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    GitHub Repository                         │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │ 5-multi-team/                               │   │
-│  │  ├── team-platform/grafana/  (Platform dashboards)   │   │
-│  │  └── team-data/grafana/      (Data dashboards)       │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-         │                                    │
-         │ Git Sync Repo 1                   │ Git Sync Repo 2
-         │ (Platform)                         │ (Data)
-         └────────────────┬───────────────────┘
-                          ▼
-              ┌───────────────────────┐
-              │  Single Grafana       │
-              │  Instance             │
-              │  :3000                │
-              │                       │
-              │  - Platform Folder    │
-              │  - Data Folder        │
-              └───────────────────────┘
-                          │
-                          │ Ngrok (webhooks)
-                          ▼
-                    Public Internet
+
+## Sync Workflow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Grafana as Grafana Instance
+    participant Git as GitHub Repository
+    participant Platform as Platform Team Path
+    participant Data as Data Team Path
+
+    User->>Grafana: 1. Edit dashboard in<br/>Platform Team folder
+    Grafana->>Platform: 2. Save to team-platform/
+
+    User->>Grafana: 3. Edit dashboard in<br/>Data Team folder
+    Grafana->>Data: 4. Save to team-data/
+
+    Note over Platform,Data: Each team's dashboards<br/>sync to their own path
+
+    Git->>Grafana: 5. Both teams' changes<br/>sync back (60s interval)
 ```
 
 ## Features
