@@ -21,11 +21,8 @@ graph TB
     PlatformPath <--> |Git Sync Repo 1| PlatformFolder
     DataPath <--> |Git Sync Repo 2| DataFolder
 
-    Grafana --> |Ngrok| Internet[Public Internet]
-
     style Grafana fill:#f96332
     style GitHub fill:#333
-    style Internet fill:#4285f4
 ```
 
 ## Sync Workflow
