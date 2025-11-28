@@ -11,6 +11,7 @@ services:
       - GF_SERVER_ROOT_URL=http://localhost:3000
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
       - GF_LOG_LEVEL=info
+      - GF_PROVISIONING_ALLOWED_TARGETS=folder
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
@@ -30,6 +31,7 @@ services:
       - GF_SERVER_ROOT_URL=${NGROK_SUBDOMAIN}
       - GF_FEATURE_TOGGLES_ENABLE=provisioning,kubernetesDashboards
       - GF_LOG_LEVEL=info
+      - GF_PROVISIONING_ALLOWED_TARGETS=folder
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]

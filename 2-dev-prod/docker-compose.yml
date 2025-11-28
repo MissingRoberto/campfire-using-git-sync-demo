@@ -22,6 +22,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SECURITY_ADMIN_USER=admin
       - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_PROVISIONING_ALLOWED_TARGETS=folder
     volumes:
       - grafana-dev-data:/var/lib/grafana
     ports:
@@ -56,6 +57,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SECURITY_ADMIN_USER=admin
       - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_PROVISIONING_ALLOWED_TARGETS=folder
     volumes:
       - grafana-prod-data:/var/lib/grafana
     ports:
