@@ -13,7 +13,7 @@ graph TB
         DataPath[team-data/grafana/]
     end
 
-    subgraph Grafana[Grafana Instance :3000]
+    subgraph Grafana[Grafana Instance]
         PlatformFolder[Platform Team Folder]
         DataFolder[Data Team Folder]
     end
