@@ -8,7 +8,7 @@ spec:
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: 5-multi-team/team-data/grafana
+    path: 5-multi-team/team-data/grafana/
     generateDashboardPreviews: true
   sync:
     enabled: true

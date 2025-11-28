@@ -8,7 +8,7 @@ spec:
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: 1-single/grafana
+    path: 1-single/grafana/
     generateDashboardPreviews: true
   sync:
     enabled: true

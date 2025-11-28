@@ -8,7 +8,7 @@ spec:
   github:
     url: ${GITHUB_REPO}
     branch: ${GITHUB_BRANCH}
-    path: 2-dev-prod/dev
+    path: 2-dev-prod/dev/
     generateDashboardPreviews: true
   sync:
     enabled: true
