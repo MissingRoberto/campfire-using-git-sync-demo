@@ -164,8 +164,13 @@ failover-to-master:
 		sed -i.bak 's/grafana-replica:3000/grafana-master:3000/' docker-compose.yml; \
 		echo "Switched from replica to master"; \
 		docker-compose --env-file ../.env up -d ngrok >/dev/null 2>&1; \
-		echo "Waiting for ngrok to start..."; \
-		sleep 3; \
+		echo "Waiting for ngrok to establish tunnel..."; \
+		for i in 1 2 3 4 5 6; do \
+			sleep 1; \
+			if curl -s http://localhost:4040/api/tunnels | grep -q '"public_url"'; then \
+				break; \
+			fi; \
+		done; \
 		echo ""; \
 		make ngrok-url; \
 	fi
@@ -182,8 +187,13 @@ failover-to-replica:
 		sed -i.bak 's/grafana-master:3000/grafana-replica:3000/' docker-compose.yml; \
 		echo "Switched from master to replica"; \
 		docker-compose --env-file ../.env up -d ngrok >/dev/null 2>&1; \
-		echo "Waiting for ngrok to start..."; \
-		sleep 3; \
+		echo "Waiting for ngrok to establish tunnel..."; \
+		for i in 1 2 3 4 5 6; do \
+			sleep 1; \
+			if curl -s http://localhost:4040/api/tunnels | grep -q '"public_url"'; then \
+				break; \
+			fi; \
+		done; \
 		echo ""; \
 		make ngrok-url; \
 	fi
